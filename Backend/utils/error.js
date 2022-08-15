@@ -1,9 +1,9 @@
-const error = (status, message) => {
+function errorHandler(status, message) {
   const err = new Error();
   err.status = status;
   err.message = message;
 
   return err;
-};
+}
 
-module.exports = error;
+module.exports = errorHandler;

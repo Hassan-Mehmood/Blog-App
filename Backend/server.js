@@ -10,6 +10,7 @@ app.use("/blogs", require("./routes/Blogs"));
 
 // Error middleware
 app.use((err, req, res, next) => {
+  console.log(err);
   const status = err.status || 500;
   const message = err.message || "Something went wrong";
 
@@ -17,6 +18,7 @@ app.use((err, req, res, next) => {
     sucess: false,
     status,
     message,
+    stack: process.env.NODE === "production" ? null : err.stack,
   });
 });
 

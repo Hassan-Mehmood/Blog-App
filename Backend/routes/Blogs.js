@@ -1,6 +1,6 @@
 const express = require("express");
 const blogModel = require("../models/Blog-Model.js");
-const error = require("../utils/error.js");
+const errorHandler = require("../utils/error.js");
 const router = express.Router();
 
 // Get all blogs
@@ -14,7 +14,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// Get blog
+// Get single Blog
 router.get("/:id", async (req, res, next) => {
   try {
     const id = req.params.id;
@@ -22,7 +22,7 @@ router.get("/:id", async (req, res, next) => {
 
     res.status(200).json(blog);
   } catch (error) {
-    error(400, "Could not find the blog");
+    next(errorHandler(404, "Could not find blog"));
   }
 });
 
