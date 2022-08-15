@@ -7,7 +7,18 @@ const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use("/blogs", require("./routes/Blogs"));
-app.get("/", (req, res) => res.send("Hello World"));
+
+// Error middleware
+app.use((err, req, res, next) => {
+  const status = err.status || 500;
+  const message = err.message || "Something went wrong";
+
+  return res.status(status).json({
+    sucess: false,
+    status,
+    message,
+  });
+});
 
 mongoose.connect(process.env.MONGO_DB, () => {
   app.listen(PORT, () => {
