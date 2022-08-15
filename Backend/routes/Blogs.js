@@ -1,16 +1,28 @@
 const express = require("express");
 const blogModel = require("../models/Blog-Model.js");
-
+const error = require("../utils/error.js");
 const router = express.Router();
 
 // Get all blogs
 router.get("/", async (req, res, next) => {
   try {
-    const blogs = await blogModel.findById("asdadadass");
+    const blogs = await blogModel.find();
 
     res.status(200).json(blogs);
   } catch (error) {
     next(error);
+  }
+});
+
+// Get blog
+router.get("/:id", async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const blog = await blogModel.findById(id);
+
+    res.status(200).json(blog);
+  } catch (error) {
+    error(400, "Could not find the blog");
   }
 });
 
