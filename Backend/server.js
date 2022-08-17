@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use("/blogs", require("./routes/Blogs"));
+app.use("/auth", require("./routes/auth"));
 
 // Error middleware
 app.use((err, req, res, next) => {
