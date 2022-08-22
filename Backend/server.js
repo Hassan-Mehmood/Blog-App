@@ -6,12 +6,13 @@ const app = express();
 
 const PORT = process.env.PORT || 5000;
 
+// Middlewares
 app.use(express.json());
 app.use(cookieParser());
 app.use("/blogs", require("./routes/Blogs"));
 app.use("/auth", require("./routes/auth"));
 
-// Error middleware
+// Error Middleware
 app.use((err, req, res, next) => {
   console.log(err);
   const status = err.status || 500;
@@ -25,12 +26,14 @@ app.use((err, req, res, next) => {
   });
 });
 
+// Database connection
 mongoose.connect(process.env.MONGO_DB, () => {
   app.listen(PORT, () => {
     console.log(`Listening on http://localhost:${PORT}`);
   });
 });
 
+// Database Updates
 let conn = mongoose.connection;
 conn.on("connected", function () {
   console.log("database is connected successfully");

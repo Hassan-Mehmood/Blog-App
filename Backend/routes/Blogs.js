@@ -6,6 +6,9 @@ const {
   updateBlog,
   deleteBlog,
 } = require("../controllers/Blogs-controler.js");
+
+const { verifyToken, verifyUser } = require("../utils/verifyToken");
+
 const router = express.Router();
 
 // Get all blogs
@@ -15,10 +18,10 @@ router.get("/", getAllBlogs);
 router.get("/:id", getBlog);
 
 // Create Blog
-router.post("/write", createBolg);
+router.post("/write", verifyToken, createBolg);
 
 // Update Blog
-router.put("/update/:id", updateBlog);
+router.put("/update/:id", verifyUser, updateBlog);
 
 // Delete Blog
 router.delete("/delete/:id", deleteBlog);

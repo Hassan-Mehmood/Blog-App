@@ -20,9 +20,10 @@ const register = async (req, res, next) => {
     await registerUser.save();
     res.status(201).send(registerUser);
   } catch (error) {
-    console.log(error);
+    next(errorHandler(error.status, error.message));
   }
 };
+
 const login = async (req, res, next) => {
   try {
     const user = await userModel.findOne({ username: req.body.username });
