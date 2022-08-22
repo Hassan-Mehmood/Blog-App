@@ -1,6 +1,7 @@
 const userModel = require("../models/user-Model");
 const bcrypt = require("bcrypt");
 const errorHandler = require("../utils/error");
+const jwt = require("jsonwebtoken");
 
 const register = async (req, res, next) => {
   try {
@@ -29,12 +30,22 @@ const login = async (req, res, next) => {
       return next(errorHandler(404, "Could not find the user"));
     }
 
-    const password = bcrypt.compareSync(req.body.password, user.password);
-    if (!password) {
+    const pass = bcrypt.compareSync(req.body.password, user.password);
+    if (!pass) {
       return next(errorHandler(400, "Username or password is incorrect"));
     }
 
-    res.json(user);
+    const { password, ...otherDetails } = user._doc;
+
+    const token = jwt.sign(
+      { id: user.id, username: user.username },
+      process.env.JWT
+    );
+
+    res
+      .cookie("access_token", token, { httpOnly: true })
+      .status(200)
+      .json(otherDetails);
   } catch (error) {
     next(errorHandler(500, error));
   }

@@ -1,4 +1,5 @@
 const blogModel = require("../models/Blog-Model.js");
+const errorHandler = require("../utils/error.js");
 
 const getAllBlogs = async (req, res, next) => {
   try {
@@ -21,7 +22,7 @@ const getBlog = async (req, res, next) => {
   }
 };
 
-const createBolg = async (req, res) => {
+const createBolg = async (req, res, next) => {
   try {
     const createdBlog = await blogModel.create({
       title: req.body.title,
@@ -34,7 +35,7 @@ const createBolg = async (req, res) => {
   }
 };
 
-const updateBlog = async (req, res) => {
+const updateBlog = async (req, res, next) => {
   try {
     const blog = req.params.id;
     const updatedBlog = await blogModel.findByIdAndUpdate(blog, req.body, {
@@ -48,7 +49,7 @@ const updateBlog = async (req, res) => {
   }
 };
 
-const deleteBlog = async (req, res) => {
+const deleteBlog = async (req, res, next) => {
   try {
     const blog = req.params.id;
 
