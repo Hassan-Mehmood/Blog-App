@@ -37,13 +37,21 @@ const createBolg = async (req, res, next) => {
 
 const updateBlog = async (req, res, next) => {
   try {
-    const blog = req.params.id;
-    const updatedBlog = await blogModel.findByIdAndUpdate(blog, req.body, {
-      new: true,
-      runValidators: true,
-    });
+    const clientID = req.user.id;
+    const blogID = req.params.id;
+    const blog = await blogModel.findById(blogID);
 
-    res.json(updatedBlog);
+    console.log(clientID, blog.author);
+
+    if (clientID === blog.author) {
+      const updatedBlog = await blogModel.findByIdAndUpdate(blogID, req.body, {
+        new: true,
+        runValidators: true,
+      });
+      res.json(updatedBlog);
+    } else {
+      next(errorHandler(401, "You are not authorized to update this blog"));
+    }
   } catch (error) {
     next(error);
   }
