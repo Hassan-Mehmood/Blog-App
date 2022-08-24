@@ -15,6 +15,10 @@ const blogSchema = new Schema(
       type: String,
       required: true,
     },
+    image: {
+      type: String,
+      default: "",
+    },
     likes: { type: Number, default: 0 },
     comments: [{ body: String, date: Date }],
   },
