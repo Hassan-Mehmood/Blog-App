@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 5000;
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
+
 app.use("/auth", require("./routes/auth"));
 app.use("/blogs", require("./routes/Blogs"));
 app.use("/users", require("./routes/user"));

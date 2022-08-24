@@ -24,6 +24,6 @@ router.post("/write", verifyToken, createBolg);
 router.put("/update/:id", verifyToken, updateBlog);
 
 // Delete Blog
-router.delete("/delete/:id", deleteBlog);
+router.delete("/delete/:id", verifyToken, deleteBlog);
 
 module.exports = router;

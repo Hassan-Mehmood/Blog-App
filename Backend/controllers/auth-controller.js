@@ -46,7 +46,7 @@ const login = async (req, res, next) => {
     res
       .cookie("access_token", token, { httpOnly: true })
       .status(200)
-      .json(otherDetails);
+      .json({ message: "Logged In", User_Details: otherDetails });
   } catch (error) {
     next(errorHandler(500, error));
   }

@@ -59,11 +59,21 @@ const updateBlog = async (req, res, next) => {
 
 const deleteBlog = async (req, res, next) => {
   try {
-    const blog = req.params.id;
+    console.log(req.user);
+    const deleteBlogID = req.params.id;
+    const userTokenID = req.user.id;
+    const blog = await blogModel.findById(deleteBlogID);
 
-    const deleteBlog = await blogModel.findByIdAndDelete(blog, req.body);
+    if (userTokenID === blog.author) {
+      const deleteBlog = await blogModel.findByIdAndDelete(
+        deleteBlogID,
+        req.body
+      );
 
-    res.json(deleteBlog);
+      res.json(deleteBlog);
+    } else {
+      next(errorHandler(401, "You are not authorized to delete this blog"));
+    }
   } catch (error) {
     next(error);
   }

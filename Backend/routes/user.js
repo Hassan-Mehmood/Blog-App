@@ -20,6 +20,6 @@ router.get("/:id", getUser);
 router.put("/update/:id", verifyToken, updateUser);
 
 // Delete User
-router.delete("/delete/:id", deleteUser);
+router.delete("/delete/:id", verifyToken, deleteUser);
 
 module.exports = router;

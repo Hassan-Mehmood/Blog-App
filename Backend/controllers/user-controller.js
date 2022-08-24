@@ -28,7 +28,7 @@ const updateUser = async (req, res, next) => {
   try {
     const clientID = req.user.id;
     const userID = req.params.id;
-    const user = await userModel.findById(blogID);
+    const user = await userModel.findById(userID);
 
     if (clientID === user._id) {
       const updatedUser = await userModel.findByIdAndUpdate(userID, req.body, {
@@ -46,11 +46,20 @@ const updateUser = async (req, res, next) => {
 
 const deleteUser = async (req, res, next) => {
   try {
-    const user = req.params.id;
+    const deleteUserID = req.params.id;
+    const tokenUserID = req.user.id;
+    const user = await userModel.findById(tokenUserID);
 
-    const deleteUser = await blogModel.findByIdAndDelete(user, req.body);
+    if (tokenUserID === user._id) {
+      const deleteUser = await userModel.findByIdAndDelete(
+        deleteUserID,
+        req.body
+      );
 
-    res.json({ message: "User deleted" });
+      res.json({ message: "User deleted" });
+    } else {
+      next(errorHandler(401, "You are not authorized to delete this user"));
+    }
   } catch (error) {
     next(error);
   }
