@@ -5,8 +5,10 @@ import HeroSection from "../Components/HeroSection";
 const HomePage = () => {
   return (
     <>
-      <Navbar />
-      <HeroSection />
+      <header>
+        <Navbar />
+        <HeroSection />
+      </header>
     </>
   );
 };
