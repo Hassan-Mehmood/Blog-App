@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../Components/Navbar";
 import HeroSection from "../Components/HeroSection";
+import Articles from "../Components/Articles";
 
 const HomePage = () => {
   return (
@@ -9,6 +10,10 @@ const HomePage = () => {
         <Navbar />
         <HeroSection />
       </header>
+      <main>
+        <Articles />
+        <section></section>
+      </main>
     </>
   );
 };
