@@ -14,7 +14,7 @@ const HomePage = () => {
         <Articles />
         <section></section>
       </main>
-      <div className="mb-96"></div>
+      <div className="" style={{ margin: " 0 0 1500px 0" }}></div>
     </>
   );
 };
