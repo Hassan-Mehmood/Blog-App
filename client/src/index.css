@@ -7,3 +7,11 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.border-light {
+  border: 1px solid rgba(0, 0, 0, 0.6);
+}
+span {
+  color: rgba(0, 0, 0, 0.9);
+  cursor: pointer;
+}

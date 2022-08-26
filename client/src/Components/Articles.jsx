@@ -2,24 +2,62 @@ import React from "react";
 
 const Articles = () => {
   return (
-    <article className="pl-8 grid grid-cols-3 gap-4 mt-40">
-      <section className=" col-span-2">
-        <div className="author_info">
-          <img
-            src="https://miro.medium.com/fit/c/20/20/1*yPhYY-wHnLlVOuNqft-hUw.jpeg"
-            alt=""
-          />
-          <p>Emmanual</p>
+    //grid grid-cols-3 gap-4
+    <article className="container mt-12 px-8 lg:grid lg:grid-cols-3 gap-8 lg:mt-40">
+      <section className="mb-8 pb-4 border-b lg:border-none order-2">
+        <p className="uppercase text-xs font-bold font-roboto my-2">
+          Discover more of what matters to you
+        </p>
+        <div className="">
+          <span className="inline-block mr-2 px-2 my-1 border-light">Self</span>
+          <span className="inline-block mr-2 px-2 my-1 border-light">
+            Data Science
+          </span>
+          <span className="inline-block mr-2 px-2 my-1 border-light">
+            Relationship
+          </span>
+          <span className="inline-block mr-2 px-2 my-1 border-light">
+            Programming
+          </span>
+          <span className="inline-block mr-2 px-2 my-1 border-light">
+            Productivity
+          </span>
+          <span className="inline-block mr-2 px-2 my-1 border-light">
+            JavaScript
+          </span>
+          <span className="inline-block mr-2 px-2 my-1 border-light">
+            React
+          </span>
+          <span className="inline-block mr-2 px-2 my-1 border-light">
+            Angular
+          </span>
         </div>
-        <div className="blog grid grid-cols-3 ">
+      </section>
+
+      <section className="order-1 col-span-2">
+        <div className="blog grid grid-cols-3 gap-1 items-center my-6 lg:my-0">
           <div className="col-span-2">
-            <h2 className="font-roboto font-bold text-2xl lg:text-3xl mb-3">
+            <div className="author_info">
+              <img
+                src="https://miro.medium.com/fit/c/20/20/1*yPhYY-wHnLlVOuNqft-hUw.jpeg"
+                alt=""
+                className="rounded-full"
+              />
+              <p className="text-sm">Emmanual</p>
+            </div>
+            <h2 className="font-roboto font-bold text-base xs:text-2xl md:text-3xl  ">
               Why Dall-E will not steal my job
             </h2>
-            <p>
+            <p className="hidden md:block">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit,
               eligendi elit. Suscipit, eligendi
             </p>
+            <div className="mt-2">
+              <p className="inline-block">Aug 6</p>
+              <span className="inline-block bg-light rounded-lg px-3 ml-4">
+                Tech
+              </span>
+            </div>
           </div>
           <div className="blog_img w-full ">
             <img
@@ -29,9 +67,6 @@ const Articles = () => {
             />
           </div>
         </div>
-      </section>
-      <section className="">
-        <p className="uppercase">Discover more of what matters to you</p>
       </section>
     </article>
   );

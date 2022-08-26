@@ -6,11 +6,20 @@ module.exports = {
       transparent: "transparent",
       current: "currentColor",
       customYellow: "#ffc017",
+      white: "#fff",
+      light: "rgba(0,0,0,0.1)",
+      black: "rgba(0,0,0)",
     },
     fontFamily: {
       notoSerif: ["Noto Serif", "serif"],
       roboto: ["Roboto", "sans-serif"],
     },
+    screens: {
+      xs: "480px",
+      md: "700px",
+      lg: "1024px",
+    },
+
     extend: {},
   },
 

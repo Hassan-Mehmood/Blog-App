@@ -10,7 +10,7 @@ const HomePage = () => {
         <Navbar />
         <HeroSection />
       </header>
-      <main className="container">
+      <main>
         <Articles />
         <section></section>
       </main>

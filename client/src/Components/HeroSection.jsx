@@ -10,6 +10,9 @@ const HeroSection = () => {
         <p className="font-roboto  text-base sm:text-lg md:text-xl max-w-sm ">
           Discover stories, thinking, and expertise from writers on any topic.
         </p>
+        <button className="bg-black text-white px-8 py-2 rounded-3xl mt-8 hover:text-black hover:bg-white transition ease-in-out duration-100">
+          Start Reading
+        </button>
       </div>
     </main>
   );
