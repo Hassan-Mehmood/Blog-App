@@ -10,10 +10,11 @@ const HomePage = () => {
         <Navbar />
         <HeroSection />
       </header>
-      <main>
+      <main className="container">
         <Articles />
         <section></section>
       </main>
+      <div className="mb-96"></div>
     </>
   );
 };
