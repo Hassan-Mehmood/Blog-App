@@ -9,6 +9,8 @@ module.exports = {
       white: "#fff",
       light: "rgba(0,0,0,0.1)",
       black: "rgba(0,0,0)",
+      black700: "rgba(0,0,0,0.7)",
+      blue700: "rgb(29 78 216)",
     },
     fontFamily: {
       notoSerif: ["Noto Serif", "serif"],

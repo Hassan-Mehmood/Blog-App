@@ -2,8 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./App.css";
 import HomePage from "./Pages/HomePage";
-import LoginForm from "./Pages/LoginForm";
-import SignupForm from "./Pages/SignupForm";
+import LoginForm from "./Components/LoginForm";
+import SignupForm from "./Components/SignupForm";
 import WriteBlog from "./Pages/WriteBlog";
 
 function App() {
