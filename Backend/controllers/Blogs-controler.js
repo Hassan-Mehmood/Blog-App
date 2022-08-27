@@ -4,7 +4,7 @@ const errorHandler = require("../utils/error.js");
 const getAllBlogs = async (req, res, next) => {
   try {
     const blogs = await blogModel.find();
-
+    console.log(blogs);
     res.status(200).json(blogs);
   } catch (error) {
     next(error);
