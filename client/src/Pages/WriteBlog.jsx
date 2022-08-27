@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 const WriteBlog = () => {
   // const onImageChange = () => {};
-
   return (
     <section className="flex flex-col justify-center items-center max-h-screen">
       <h2 className="text-4xl my-8">Write your blog</h2>

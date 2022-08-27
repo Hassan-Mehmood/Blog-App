@@ -31,12 +31,12 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="mx-8">
-            <Link to={""} className="text-lg">
+            <Link to={"/login"} className="text-lg">
               Login
             </Link>
           </li>
           <li>
-            <Link to={""} className="text-lg">
+            <Link to={"/login"} className="text-lg">
               Signup
             </Link>
           </li>
