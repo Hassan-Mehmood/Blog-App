@@ -2,6 +2,9 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 
+// This component & Login component are the worst things i have written in my life!!
+// Will fix it when i get the time and energy
+
 const SignupForm = ({ setshowSignup }) => {
   const [formData, setFormData] = useState({
     userName: "",
@@ -18,17 +21,10 @@ const SignupForm = ({ setshowSignup }) => {
     setFormData({ ...formData, [inputName]: inputValue });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    axios
-      .post("http://localhost:3001/auth/register", { formData })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    const response = await axios.post("/auth/register", formData);
 
     setFormData({ userName: "", email: "", password: "", confirmPassword: "" });
   };

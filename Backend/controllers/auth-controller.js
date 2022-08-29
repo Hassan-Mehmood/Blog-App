@@ -12,7 +12,7 @@ const register = async (req, res, next) => {
     const hash = bcrypt.hashSync(pass, salt);
 
     const registerUser = new userModel({
-      username: req.body.username,
+      username: req.body.userName,
       email: req.body.email,
       password: hash,
     });

@@ -4,6 +4,8 @@ import useFetch from "../hooks/useFetch";
 const Articles = () => {
   const { data, error, loading } = useFetch("/blogs");
 
+  console.log(data);
+
   return (
     <>
       <article className="container mt-12 px-8 lg:grid lg:grid-cols-3 gap-8 lg:mt-40">
