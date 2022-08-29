@@ -4,7 +4,7 @@ import useFetch from "../hooks/useFetch";
 const Articles = () => {
   const { data, error, loading } = useFetch("/blogs");
 
-  console.log("Data:", data);
+  // console.log("Data:", data);
 
   return (
     <>
@@ -42,8 +42,11 @@ const Articles = () => {
         </section>
 
         <section className="order-1 col-span-2">
-          {data.map((blog) => (
-            <div className="blog grid grid-cols-3 gap-1 items-center my-6 lg:my-0">
+          {data.map((blog, key) => (
+            <div
+              className="blog grid grid-cols-3 gap-1 items-center my-6 lg:my-0"
+              key={key}
+            >
               <div className="col-span-2">
                 <div className="author_info">
                   <img
