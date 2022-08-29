@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import { useState } from "react";
 
@@ -19,6 +20,16 @@ const SignupForm = ({ setshowSignup }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    axios
+      .post("http://localhost:3001/auth/register", { formData })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
     setFormData({ userName: "", email: "", password: "", confirmPassword: "" });
   };
   const handleFocus = () => {
@@ -58,10 +69,10 @@ const SignupForm = ({ setshowSignup }) => {
               onChange={hanldeFormChange}
               value={formData.userName}
             />
-            <span className="text-xs text-red error-span">
+            {/* <span className="text-xs text-red error-span">
               Username should be 3-16 characters and shuld not include special
               characters
-            </span>
+            </span> */}
           </div>
           <div className="mb-4">
             <label
@@ -83,9 +94,9 @@ const SignupForm = ({ setshowSignup }) => {
               onChange={hanldeFormChange}
               value={formData.email}
             />
-            <span className="text-xs text-red error-span">
+            {/* <span className="text-xs text-red error-span">
               E-Mail should be of correct type
-            </span>
+            </span> */}
           </div>
           <div className="mb-6">
             <label
@@ -108,10 +119,10 @@ const SignupForm = ({ setshowSignup }) => {
               onChange={hanldeFormChange}
               value={formData.password}
             />
-            <span className="text-xs text-red error-span">
+            {/* <span className="text-xs text-red error-span">
               Password shuld be 6-20 characters and include atleast 1 letter, 1
               number
-            </span>
+            </span> */}
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="confirmpassword"
@@ -132,9 +143,9 @@ const SignupForm = ({ setshowSignup }) => {
               onChange={hanldeFormChange}
               value={formData.confirmPassword}
             />
-            <span className="text-xs text-red error-span">
+            {/* <span className="text-xs text-red error-span">
               Password don't match
-            </span>
+            </span> */}
           </div>
 
           <button
