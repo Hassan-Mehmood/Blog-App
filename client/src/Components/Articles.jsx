@@ -8,10 +8,9 @@ const Articles = () => {
   const { data, isLoading, isError, error } = useQuery(["blogs"], () =>
     fetchData("/blogs")
   );
-  const loading = true;
   return (
     <>
-      <article className="container mt-12 px-8 lg:grid lg:grid-cols-3 gap-8 lg:mt-40">
+      <article className="container mt-12 px-8 lg:grid lg:grid-cols-3 gap-8 lg:mt-28">
         <section className="mb-8 pb-4 border-b lg:border-none order-2">
           <p className="uppercase text-xs font-bold font-roboto my-2">
             Discover more of what matters to you
@@ -47,6 +46,7 @@ const Articles = () => {
         {/* {loading ? loadingSpinner() : ""} */}
         {isError ? `${error.message}` : ""}
         <section className="order-1 col-span-2">
+          {isLoading ? "Loading" : ""}
           {data?.map((blog, key) => (
             <div
               className="blog grid grid-cols-3 gap-1 items-center my-6 lg:my-0"
