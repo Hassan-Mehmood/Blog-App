@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 const useFetch = (url) => {
   let server_URL = process.env.REACT_APP_SERVER_URL + url;
+  console.log(server_URL);
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);

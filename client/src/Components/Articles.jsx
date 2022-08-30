@@ -1,11 +1,14 @@
 import React from "react";
-import useFetch from "../hooks/useFetch";
+// import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import fetchData from "../utils/fetchData";
+// import loadingSpinner from "../utils/loadingSpinner";
 
 const Articles = () => {
-  const { data, error, loading } = useFetch("/blogs");
-
-  // console.log(data);
-
+  const { data, isLoading, isError, error } = useQuery(["blogs"], () =>
+    fetchData("/blogs")
+  );
+  const loading = true;
   return (
     <>
       <article className="container mt-12 px-8 lg:grid lg:grid-cols-3 gap-8 lg:mt-40">
@@ -41,8 +44,10 @@ const Articles = () => {
           </div>
         </section>
 
+        {/* {loading ? loadingSpinner() : ""} */}
+        {isError ? `${error.message}` : ""}
         <section className="order-1 col-span-2">
-          {data.map((blog, key) => (
+          {data?.map((blog, key) => (
             <div
               className="blog grid grid-cols-3 gap-1 items-center my-6 lg:my-0"
               key={key}
