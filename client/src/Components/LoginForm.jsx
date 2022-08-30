@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import Field from "./FormFields/Field";
 
 // This component & Signup component are the worst things i have written in my life!!
 // Will fix it when i get the time and energy
@@ -13,7 +14,7 @@ const LoginForm = ({ setshowLogin, setshowSignup }) => {
     password: "",
   });
 
-  const handleChange = (e) => {
+  const handleFormChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   // console.log(formData);
@@ -51,37 +52,27 @@ const LoginForm = ({ setshowLogin, setshowSignup }) => {
         >
           <p className="font-bold text-center text-3xl mb-4">Login</p>
           <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="username"
-            >
-              Username
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="username"
-              type="text"
-              name="userName"
+            {/* USERNAME */}
+            <Field
+              id={"userName"}
+              label={"Username"}
+              name={"userName"}
+              placeholder={"Username"}
+              type={"text"}
               value={formData.userName}
-              onChange={handleChange}
-              placeholder="Username"
+              handleFormChange={handleFormChange}
             />
           </div>
           <div className="mb-6">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="password"
-            >
-              Password
-            </label>
-            <input
-              className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-              id="password"
-              type="password"
-              name="password"
+            {/* PASSWORD */}
+            <Field
+              id={"password"}
+              label={"Password"}
+              name={"password"}
+              placeholder={"Password"}
+              type={"password"}
               value={formData.password}
-              onChange={handleChange}
-              placeholder="******************"
+              handleFormChange={handleFormChange}
             />
           </div>
           <div className="flex items-center justify-between">
