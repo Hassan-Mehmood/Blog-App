@@ -28,12 +28,16 @@ const login = async (req, res, next) => {
   try {
     const user = await userModel.findOne({ username: req.body.userName });
     if (!user) {
-      res.status(404).json({ response: "User not found" });
+      res.json({ message: "User not found" });
+      console.log("!USER");
+      return;
       // return next(errorHandler(404, "Could not find the user"));
     }
     const pass = bcrypt.compareSync(req.body.password, user.password);
     if (!pass) {
-      res.send({ response: "Username or password is incorrect" });
+      res.json({ message: "Username or password is incorrect" });
+      console.log("!PASS");
+      return;
       // return next(errorHandler(400, "Username or password is incorrect"));
     }
 
@@ -48,8 +52,12 @@ const login = async (req, res, next) => {
       .cookie("access_token", token, { httpOnly: true })
       .status(200)
       .json({ message: "Logged In", User_Details: otherDetails });
+    console.log("FUNCTION END");
   } catch (error) {
-    next(errorHandler(500, error));
+    console.log("CATCH");
+    res.send(error);
+    return;
+    // next(error);
   }
 };
 

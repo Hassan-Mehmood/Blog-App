@@ -7,6 +7,7 @@ import React, { useState } from "react";
 const LoginForm = ({ setshowLogin, setshowSignup }) => {
   const SERVER_URL = process.env.REACT_APP_SERVER_URL + "/auth/login";
   const [loading, setLoading] = useState(false);
+  const [serverResponse, setserverResponse] = useState("");
   const [formData, setFormData] = useState({
     userName: "",
     password: "",
@@ -19,12 +20,17 @@ const LoginForm = ({ setshowLogin, setshowSignup }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setserverResponse("");
 
     setLoading(true);
 
-    await axios.post(SERVER_URL, formData);
-    // const response =
-    // console.log(response);
+    const response = await axios.post(SERVER_URL, formData);
+
+    console.log(response.data.message);
+
+    setserverResponse(response.data.message);
+
+    console.log(response);
 
     setLoading(false);
   };
@@ -87,7 +93,10 @@ const LoginForm = ({ setshowLogin, setshowSignup }) => {
               Sign In
             </button>
           </div>
-          <div className="text-center">{loading && "Loading"}</div>
+          <div className="text-center">
+            <p>{loading && "Loading"}</p>
+            <p className="text-red mt-8">{serverResponse}</p>
+          </div>
         </form>
       </div>
     </>
