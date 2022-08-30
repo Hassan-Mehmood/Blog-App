@@ -1,6 +1,34 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 
-const LoginForm = ({ setshowLogin }) => {
+// This component & Signup component are the worst things i have written in my life!!
+// Will fix it when i get the time and energy
+
+const LoginForm = ({ setshowLogin, setshowSignup }) => {
+  const SERVER_URL = process.env.REACT_APP_SERVER_URL + "/auth/login";
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    userName: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  // console.log(formData);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setLoading(true);
+
+    await axios.post(SERVER_URL, formData);
+    // const response =
+    // console.log(response);
+
+    setLoading(false);
+  };
+
   const handleOverlayClick = () => {
     setshowLogin(false);
   };
@@ -11,7 +39,10 @@ const LoginForm = ({ setshowLogin }) => {
         onClick={handleOverlayClick}
       ></div>
       <div className="w-full max-w-xs fixed top-2/4 left-2/4 right-2/4 -translate-x-2/4 -translate-y-2/4 rounded">
-        <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <form
+          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+          onSubmit={handleSubmit}
+        >
           <p className="font-bold text-center text-3xl mb-4">Login</p>
           <div className="mb-4">
             <label
@@ -24,6 +55,9 @@ const LoginForm = ({ setshowLogin }) => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="username"
               type="text"
+              name="userName"
+              value={formData.userName}
+              onChange={handleChange}
               placeholder="Username"
             />
           </div>
@@ -38,23 +72,22 @@ const LoginForm = ({ setshowLogin }) => {
               className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
               id="password"
               type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
               placeholder="******************"
             />
           </div>
           <div className="flex items-center justify-between">
             <button
               className="bg-blue-500 hover:bg-blue700 hover:text-white border font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline focus:bg-blue700 focus:text-white"
-              type="button"
+              type="submit"
+              onClick={handleSubmit}
             >
               Sign In
             </button>
-            <a
-              className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-              href="/"
-            >
-              Forgot Password?
-            </a>
           </div>
+          <div className="text-center">{loading && "Loading"}</div>
         </form>
       </div>
     </>

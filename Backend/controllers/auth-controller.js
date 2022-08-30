@@ -26,14 +26,15 @@ const register = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   try {
-    const user = await userModel.findOne({ username: req.body.username });
+    const user = await userModel.findOne({ username: req.body.userName });
     if (!user) {
-      return next(errorHandler(404, "Could not find the user"));
+      res.status(404).json({ response: "User not found" });
+      // return next(errorHandler(404, "Could not find the user"));
     }
-
     const pass = bcrypt.compareSync(req.body.password, user.password);
     if (!pass) {
-      return next(errorHandler(400, "Username or password is incorrect"));
+      res.send({ response: "Username or password is incorrect" });
+      // return next(errorHandler(400, "Username or password is incorrect"));
     }
 
     const { password, ...otherDetails } = user._doc;

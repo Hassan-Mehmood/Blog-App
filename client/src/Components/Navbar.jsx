@@ -51,8 +51,15 @@ const Navbar = () => {
           </ul>
         </div>
       </nav>
-      {showSignup && <SignupFormm setshowSignup={setshowSignup} />}
-      {showLogin && <LoginForm setshowLogin={setshowLogin} />}
+      {showSignup && (
+        <SignupFormm
+          setshowSignup={setshowSignup}
+          setshowLogin={setshowLogin}
+        />
+      )}
+      {showLogin && (
+        <LoginForm setshowLogin={setshowLogin} setshowSignup={setshowSignup} />
+      )}
     </>
   );
 };

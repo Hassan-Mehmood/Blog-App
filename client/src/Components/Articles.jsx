@@ -4,7 +4,7 @@ import useFetch from "../hooks/useFetch";
 const Articles = () => {
   const { data, error, loading } = useFetch("/blogs");
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <>

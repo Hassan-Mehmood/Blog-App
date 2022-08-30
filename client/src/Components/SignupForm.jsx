@@ -1,11 +1,10 @@
 import axios from "axios";
-import React from "react";
 import { useState } from "react";
 
 // This component & Login component are the worst things i have written in my life!!
 // Will fix it when i get the time and energy
 
-const SignupForm = ({ setshowSignup }) => {
+const SignupForm = ({ setshowSignup, setshowLogin }) => {
   const [formData, setFormData] = useState({
     userName: "",
     email: "",
@@ -23,11 +22,13 @@ const SignupForm = ({ setshowSignup }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const response = await axios.post("/auth/register", formData);
-
+    const SERVER_URL = process.env.REACT_APP_SERVER_URL + "/auth/register";
+    await axios.post(SERVER_URL, formData);
+    setshowSignup(false);
+    setshowLogin(true);
     setFormData({ userName: "", email: "", password: "", confirmPassword: "" });
   };
+
   const handleFocus = () => {
     setFocused(true);
   };
@@ -60,7 +61,7 @@ const SignupForm = ({ setshowSignup }) => {
               required={true}
               onBlur={handleFocus}
               focused={focused.toString()}
-              pattern="^[a-zA-z]{3,16}$"
+              // pattern="^[a-zA-z]{3,16}$"
               placeholder="Username"
               onChange={hanldeFormChange}
               value={formData.userName}
@@ -110,7 +111,7 @@ const SignupForm = ({ setshowSignup }) => {
               required={true}
               onBlur={handleFocus}
               focused={focused.toString()}
-              pattern="^[a-zA-z]{6,16}$"
+              // pattern="^[a-zA-z]{6,16}$"
               placeholder="******************"
               onChange={hanldeFormChange}
               value={formData.password}
@@ -134,7 +135,7 @@ const SignupForm = ({ setshowSignup }) => {
               required={true}
               onBlur={handleFocus}
               focused={focused.toString()}
-              pattern={formData.password}
+              // pattern={formData.password}
               placeholder="******************"
               onChange={hanldeFormChange}
               value={formData.confirmPassword}
@@ -146,7 +147,7 @@ const SignupForm = ({ setshowSignup }) => {
 
           <button
             className="bg-blue-500 hover:bg-blue700 hover:text-white border font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline focus:bg-blue700 focus:text-white"
-            type="button"
+            type="submit"
             onClick={handleSubmit}
           >
             Sign Up
