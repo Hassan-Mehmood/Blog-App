@@ -1,41 +1,38 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { useSelector, useDispatch } from "react-redux";
 import Field from "./FormFields/Field";
 
 // This component & Signup component are the worst things i have written in my life!!
 // Will fix it when i get the time and energy
 
-const LoginForm = ({ setshowLogin, setshowSignup }) => {
-  const SERVER_URL = process.env.REACT_APP_SERVER_URL + "/auth/login";
-  const [loading, setLoading] = useState(false);
-  const [serverResponse, setserverResponse] = useState("");
+const LoginForm = ({ setshowLogin }) => {
+  // Login form data state
   const [formData, setFormData] = useState({
     userName: "",
     password: "",
   });
 
+  // Function to send login request to server
+  const { data, mutateAsync } = useMutation((user) => {
+    const URL = process.env.REACT_APP_SERVER_URL + "/auth/login";
+    return axios.post(URL, user);
+  });
+
+  console.log(data);
+  // detect change in login form
   const handleFormChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  // console.log(formData);
 
+  // handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setserverResponse("");
-
-    setLoading(true);
-
-    const response = await axios.post(SERVER_URL, formData);
-
-    console.log(response.data.message);
-
-    setserverResponse(response.data.message);
-
-    console.log(response);
-
-    setLoading(false);
+    await mutateAsync(formData);
   };
 
+  // Hide the login form when clicked
   const handleOverlayClick = () => {
     setshowLogin(false);
   };
@@ -85,8 +82,8 @@ const LoginForm = ({ setshowLogin, setshowSignup }) => {
             </button>
           </div>
           <div className="text-center">
-            <p>{loading && "Loading"}</p>
-            <p className="text-red mt-8">{serverResponse}</p>
+            <p></p>
+            <p className="text-red mt-8"></p>
           </div>
         </form>
       </div>

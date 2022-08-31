@@ -28,7 +28,7 @@ const login = async (req, res, next) => {
   try {
     const user = await userModel.findOne({ username: req.body.userName });
     if (!user) {
-      res.json({ message: "User not found" });
+      res.status(404).json({ message: "User not found" });
       console.log("!USER");
       return;
       // return next(errorHandler(404, "Could not find the user"));
