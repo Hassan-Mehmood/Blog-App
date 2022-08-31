@@ -1,12 +1,11 @@
 import React from "react";
-// import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import fetchData from "../utils/fetchData";
+import { fetchBlogs } from "../api/axiosClient";
 // import loadingSpinner from "../utils/loadingSpinner";
 
 const Articles = () => {
   const { data, isLoading, isError, error } = useQuery(["blogs"], () =>
-    fetchData("/blogs")
+    fetchBlogs("/blogs")
   );
   return (
     <>

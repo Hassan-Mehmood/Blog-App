@@ -51,11 +51,14 @@ const WriteBlog = () => {
             </button>
           </div>
         </form>
-        <button
-          className="font-bold ml-8 py-2 px-4 rounded border"
-          type="button"
-        >
-          <Link to={"/"}>Back</Link>
+        <button>
+          <Link
+            to={"/"}
+            className="font-bold ml-8 py-2 px-4 rounded border"
+            type="button"
+          >
+            Back
+          </Link>
         </button>
       </div>
     </section>

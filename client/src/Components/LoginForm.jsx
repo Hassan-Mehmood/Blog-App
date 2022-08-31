@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import Field from "./FormFields/Field";
-import { AuthContext } from "../Context/UserContext";
+import { AuthContext } from "../Context/AuthContext";
 
 // This component & Signup component are the worst things i have written in my life!!
 // Will fix it when i get the time and energy
@@ -13,7 +13,7 @@ const LoginForm = ({ setshowLogin }) => {
     password: "",
   });
 
-  const { user, loading, error, dispatch } = useContext(AuthContext);
+  const { loading, error, dispatch } = useContext(AuthContext);
 
   // detect change in login form
   const handleFormChange = (e) => {
@@ -30,7 +30,7 @@ const LoginForm = ({ setshowLogin }) => {
       const URL = process.env.REACT_APP_SERVER_URL + "/auth/login";
       const res = await axios.post(URL, formData);
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
-      console.log(res);
+      setshowLogin(false);
     } catch (error) {
       dispatch({ type: "LOGIN_FAIL", payload: error.response.data });
     }

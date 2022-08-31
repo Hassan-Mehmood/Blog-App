@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import Field from "./FormFields/Field";
+import { signUpUser } from "../api/axiosClient";
 
 // This component & Login component are the worst things i have written in my life!!
 // Will fix it when i get the time and energy
@@ -15,11 +16,8 @@ const SignupForm = ({ setshowSignup, setshowLogin }) => {
   });
 
   const mutation = useMutation((addUser) => {
-    const url = process.env.REACT_APP_SERVER_URL + "/auth/register";
-    return axios.post(url, addUser);
+    signUpUser("/auth/register", addUser);
   });
-
-  // const [focused, setFocused] = useState(false);
 
   const handleFormChange = (e) => {
     const inputName = e.target.name;
@@ -31,14 +29,9 @@ const SignupForm = ({ setshowSignup, setshowLogin }) => {
     e.preventDefault();
 
     mutation.mutate(formData);
-    // console.log("User registered");
     setFormData({ userName: "", email: "", password: "", confirmPassword: "" });
   };
 
-  // const handleFocus = () => {
-  //   setFocused(true);
-  // };
-  // console.log(formData);
   const handleOverlayClick = () => {
     setshowSignup(false);
   };

@@ -3,10 +3,14 @@ import { useState } from "react";
 import SignupFormm from "../Components/SignupForm";
 import { Link } from "react-router-dom";
 import LoginForm from "./LoginForm";
+import { AuthContext } from "../Context/AuthContext";
+import { useContext } from "react";
 const Navbar = () => {
   const [changeColor, setChangeColor] = useState(false);
   const [showSignup, setshowSignup] = useState(false);
   const [showLogin, setshowLogin] = useState(false);
+
+  const { user, dispatch } = useContext(AuthContext);
 
   const handleScrollNavbar = () => {
     if (window.scrollY >= 200) {
@@ -16,11 +20,15 @@ const Navbar = () => {
     }
   };
 
-  const handleSignup = () => {
+  const handleShowSignup = () => {
     setshowSignup(true);
   };
-  const handleLogin = () => {
+  const handleShowLogin = () => {
     setshowLogin(true);
+  };
+
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT" });
   };
 
   window.addEventListener("scroll", handleScrollNavbar);
@@ -42,12 +50,23 @@ const Navbar = () => {
                 Write
               </Link>
             </li>
-            <li className="mx-8 text-lg" onClick={handleLogin}>
-              <Link to={""}>Log in</Link>
-            </li>
-            <li className="text-lg" onClick={handleSignup}>
-              <Link to={""}>Sign up</Link>
-            </li>
+            {user ? (
+              <li className="mx-8 text-lg">
+                <Link to={""} onClick={handleLogout}>
+                  {" "}
+                  {user?.userDetails.username}
+                </Link>
+              </li>
+            ) : (
+              <>
+                <li className="mx-8 text-lg" onClick={handleShowLogin}>
+                  <Link to={""}>Log in</Link>
+                </li>
+                <li className="text-lg" onClick={handleShowSignup}>
+                  <Link to={""}>Sign up</Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </nav>
