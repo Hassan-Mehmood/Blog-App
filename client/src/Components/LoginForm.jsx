@@ -1,8 +1,7 @@
 import axios from "axios";
-import React, { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useContext, useState } from "react";
 import Field from "./FormFields/Field";
+import { AuthContext } from "../Context/UserContext";
 
 // This component & Signup component are the worst things i have written in my life!!
 // Will fix it when i get the time and energy
@@ -14,13 +13,8 @@ const LoginForm = ({ setshowLogin }) => {
     password: "",
   });
 
-  // Function to send login request to server
-  const { data, mutateAsync } = useMutation((user) => {
-    const URL = process.env.REACT_APP_SERVER_URL + "/auth/login";
-    return axios.post(URL, user);
-  });
+  const { user, loading, error, dispatch } = useContext(AuthContext);
 
-  console.log(data);
   // detect change in login form
   const handleFormChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -29,7 +23,17 @@ const LoginForm = ({ setshowLogin }) => {
   // handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await mutateAsync(formData);
+
+    dispatch({ type: "LOGIN_START" });
+
+    try {
+      const URL = process.env.REACT_APP_SERVER_URL + "/auth/login";
+      const res = await axios.post(URL, formData);
+      dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+      console.log(res);
+    } catch (error) {
+      dispatch({ type: "LOGIN_FAIL", payload: error.response.data });
+    }
   };
 
   // Hide the login form when clicked
@@ -74,16 +78,16 @@ const LoginForm = ({ setshowLogin }) => {
           </div>
           <div className="flex items-center justify-between">
             <button
-              className="bg-blue-500 hover:bg-blue700 hover:text-white border font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline focus:bg-blue700 focus:text-white"
+              className="bg-blue-500 hover:bg-customYellow hover:text-black border font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline focus:bg-customYellow focus:text-black"
               type="submit"
-              onClick={handleSubmit}
+              onSubmit={handleSubmit}
             >
               Sign In
             </button>
           </div>
           <div className="text-center">
-            <p></p>
-            <p className="text-red mt-8"></p>
+            <p>{loading ? "Loading" : ""}</p>
+            <p className="text-red mt-8">{error ? "ERROR" : ""}</p>
           </div>
         </form>
       </div>
