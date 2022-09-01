@@ -51,12 +51,17 @@ const Navbar = () => {
               </Link>
             </li>
             {user ? (
-              <li className="mx-8 text-lg">
-                <Link to={""} onClick={handleLogout}>
-                  {" "}
-                  {user?.userDetails.username}
-                </Link>
-              </li>
+              <>
+                <li className="mx-8 text-lg">
+                  <Link to={`/blogs/${user?.userDetails._id}`}>My Blogs</Link>
+                </li>
+
+                <li className="text-lg">
+                  <Link to={""} onClick={handleLogout}>
+                    {user?.userDetails.username}
+                  </Link>
+                </li>
+              </>
             ) : (
               <>
                 <li className="mx-8 text-lg" onClick={handleShowLogin}>

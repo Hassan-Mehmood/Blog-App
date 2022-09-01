@@ -12,3 +12,7 @@ export const fetchBlogs = async (endPoint) => {
 export const signUpUser = async (endPoint, payLoad) => {
   return axiosClient.post(endPoint, payLoad);
 };
+
+export const loginUser = async (endPoint, payLoad) => {
+  return axiosClient.post(endPoint, payLoad);
+};

@@ -46,9 +46,7 @@ const login = async (req, res, next) => {
       .cookie("access_token", token, { httpOnly: true })
       .status(200)
       .json({ message: "Logged In", userDetails: otherDetails });
-    console.log("FUNCTION END");
   } catch (error) {
-    console.log("CATCH");
     res.send(error);
     return next(error);
   }

@@ -1,7 +1,7 @@
-import axios from "axios";
 import React, { useContext, useState } from "react";
 import Field from "./FormFields/Field";
 import { AuthContext } from "../Context/AuthContext";
+import { loginUser } from "../api/axiosClient";
 
 // This component & Signup component are the worst things i have written in my life!!
 // Will fix it when i get the time and energy
@@ -27,8 +27,8 @@ const LoginForm = ({ setshowLogin }) => {
     dispatch({ type: "LOGIN_START" });
 
     try {
-      const URL = process.env.REACT_APP_SERVER_URL + "/auth/login";
-      const res = await axios.post(URL, formData);
+      const res = await loginUser("/auth/login", formData);
+
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
       setshowLogin(false);
     } catch (error) {
