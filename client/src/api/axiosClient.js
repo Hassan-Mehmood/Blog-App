@@ -16,3 +16,7 @@ export const signUpUser = async (endPoint, payLoad) => {
 export const loginUser = async (endPoint, payLoad) => {
   return axiosClient.post(endPoint, payLoad);
 };
+
+export const uploadBlog = async (endPoint, payLoad) => {
+  return axiosClient.post(endPoint, payLoad);
+};

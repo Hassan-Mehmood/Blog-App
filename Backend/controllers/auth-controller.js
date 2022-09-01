@@ -37,15 +37,13 @@ const login = async (req, res, next) => {
 
     const { password, ...otherDetails } = user._doc;
 
-    const token = jwt.sign(
-      { id: user.id, username: user.username },
-      process.env.JWT
-    );
+    const token = jwt.sign({ id: user._id }, process.env.JWT);
 
     res
       .cookie("access_token", token, { httpOnly: true })
       .status(200)
       .json({ message: "Logged In", userDetails: otherDetails });
+    console.log("Login Complete");
   } catch (error) {
     res.send(error);
     return next(error);

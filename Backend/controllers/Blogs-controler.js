@@ -24,9 +24,11 @@ const getBlog = async (req, res, next) => {
 
 const createBolg = async (req, res, next) => {
   try {
+    console.log(req.body);
+    console.log(req.user);
     const createdBlog = await blogModel.create({
       title: req.body.title,
-      author: req.user.id,
+      author: req.user.author,
       body: req.body.body,
     });
     res.send(createdBlog);

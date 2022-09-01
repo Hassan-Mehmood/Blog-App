@@ -22,10 +22,10 @@ input[type="file"] {
 
 .image-upload {
   color: #fff;
-  background-color: rgba(0, 0, 0, 0.719);
+  background-color: rgba(0, 0, 0, 0.63);
   display: inline-block;
   border-radius: 4px;
-  padding: 6px 12px;
+  padding: 0.5rem 1rem;
   cursor: pointer;
   font-weight: bold;
 }
