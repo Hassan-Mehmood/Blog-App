@@ -4,7 +4,6 @@ const errorHandler = require("../utils/error.js");
 const getAllBlogs = async (req, res, next) => {
   try {
     const blogs = await blogModel.find();
-    // console.log(blogs);
     res.status(200).json(blogs);
   } catch (error) {
     next(error);
@@ -26,13 +25,13 @@ const createBolg = async (req, res, next) => {
   try {
     const createdBlog = await blogModel.create({
       title: req.body.title,
+      excerpt: req.body.excerpt,
       author: req.user.id,
       body: req.body.body,
+      image: req.file.originalname,
     });
     res.send(createdBlog);
-    console.log("CREATEBLOG FINISHED");
   } catch (error) {
-    console.log("CREATEBLOG CATCH");
     next(error);
   }
 };

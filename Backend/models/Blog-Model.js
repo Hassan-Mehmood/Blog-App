@@ -6,14 +6,21 @@ const blogSchema = new Schema(
     title: {
       type: String,
       required: true,
+      trim: true,
     },
     author: {
       type: String,
       required: true,
     },
+    excerpt: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     body: {
       type: String,
       required: true,
+      trim: true,
     },
     image: {
       type: String,

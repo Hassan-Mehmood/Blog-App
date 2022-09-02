@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 import { uploadBlog } from "../api/axiosClient";
 import Field from "../Components/FormFields/Field";
 import { AuthContext } from "../Context/AuthContext";
-import "react-toastify/dist/ReactToastify.css";
 
 const WriteBlog = () => {
   const [formData, setFormData] = useState({
     title: "",
     body: "",
-    // image: undefined,
+    excerpt: "",
+    image: "",
   });
 
   const { user } = useContext(AuthContext);
@@ -33,6 +33,9 @@ const WriteBlog = () => {
       console.log(error);
     }
   };
+  const handlePhoto = (e) => {
+    setFormData({ ...formData, image: e.target.files[0] });
+  };
 
   return (
     <section className="flex flex-col justify-center items-center max-h-screen">
@@ -44,6 +47,8 @@ const WriteBlog = () => {
         <form
           className="bg-white shadow-md  rounded px-8 pt-6 pb-8 mb-4"
           onSubmit={handleSubmit}
+          method="post"
+          encType="multipart/form-data"
         >
           <div className="mb-4">
             <Field
@@ -52,6 +57,16 @@ const WriteBlog = () => {
               name={"title"}
               type={"text"}
               placeholder={"Title.."}
+              handleFormChange={handleFormChange}
+            />
+          </div>
+          <div className="mb-4">
+            <Field
+              label={"Excerpt"}
+              id={"excerpt"}
+              name={"excerpt"}
+              type={"text"}
+              placeholder={"Excerpt..."}
               handleFormChange={handleFormChange}
             />
           </div>
@@ -73,10 +88,12 @@ const WriteBlog = () => {
           </div>
           <div className="flex items-center justify-between ">
             <div>
-              <label className="image-upload ">
-                <input type="file" name="image" accept="image/*" />
-                Upload Image
-              </label>
+              <input
+                type="file"
+                name="image"
+                accept=".png, .jpg, .jpeg"
+                onChange={handlePhoto}
+              />
               <button
                 className="font-bold py-2 px-4 ml-2 rounded border"
                 type="submit"

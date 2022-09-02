@@ -20,5 +20,7 @@ export const loginUser = async (endPoint, payLoad) => {
 };
 
 export const uploadBlog = async (endPoint, payLoad) => {
-  return axiosClient.post(endPoint, payLoad);
+  return axiosClient.post(endPoint, payLoad, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
 };
