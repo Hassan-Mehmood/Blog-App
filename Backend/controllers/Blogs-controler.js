@@ -24,15 +24,15 @@ const getBlog = async (req, res, next) => {
 
 const createBolg = async (req, res, next) => {
   try {
-    console.log(req.body);
-    console.log(req.user);
     const createdBlog = await blogModel.create({
       title: req.body.title,
-      author: req.user.author,
+      author: req.user.id,
       body: req.body.body,
     });
     res.send(createdBlog);
+    console.log("CREATEBLOG FINISHED");
   } catch (error) {
+    console.log("CREATEBLOG CATCH");
     next(error);
   }
 };

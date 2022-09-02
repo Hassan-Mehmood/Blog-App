@@ -1,7 +1,9 @@
 import axios from "axios";
+axios.defaults.withCredentials = true;
 
 export const axiosClient = axios.create({
   baseURL: "http://localhost:3001",
+  withCredentials: true,
 });
 
 export const fetchBlogs = async (endPoint) => {

@@ -3,8 +3,8 @@ const errorHandler = require("../utils/error.js");
 
 exports.verifyToken = (req, res, next) => {
   const { cookies } = req;
-  console.log(cookies);
-  const token = cookies.access_token;
+
+  const token = cookies.token;
 
   if (!token) return next(errorHandler(401, "You are not authorized"));
 

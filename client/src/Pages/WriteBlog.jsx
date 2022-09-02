@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 import { uploadBlog } from "../api/axiosClient";
 import Field from "../Components/FormFields/Field";
 import { AuthContext } from "../Context/AuthContext";
-
-// import Navbar from "../Components/Navbar";
+import "react-toastify/dist/ReactToastify.css";
 
 const WriteBlog = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +13,7 @@ const WriteBlog = () => {
     body: "",
     // image: undefined,
   });
+
   const { user } = useContext(AuthContext);
   const { userDetails } = user;
 
