@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchBlogs } from "../api/axiosClient";
+import moment from "moment";
 
 const Articles = () => {
   const { data, isLoading, isError, error } = useQuery(["blogs"], () =>
@@ -69,7 +70,9 @@ const Articles = () => {
                   {blog.excerpt}
                 </p>
                 <div className="mt-4">
-                  <p className="inline-block">Aug 6</p>
+                  <p className="inline-block">
+                    {moment(blog.createdAt).format("MMM D ")}
+                  </p>
                   <span className="inline-block bg-light rounded-lg px-3 ml-4">
                     Tech
                   </span>

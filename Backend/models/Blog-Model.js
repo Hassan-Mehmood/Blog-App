@@ -26,6 +26,7 @@ const blogSchema = new Schema(
       type: String,
       default: "",
     },
+    tags: [{ type: String }],
     likes: { type: Number, default: 0 },
     comments: [{ body: String, date: Date }],
   },
