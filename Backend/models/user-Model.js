@@ -19,6 +19,12 @@ const userSchema = new Schema(
       required: true,
       trim: true,
     },
+    posts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Blog",
+      },
+    ],
   },
   { timestamps: true }
 );

@@ -40,7 +40,7 @@ const SignupForm = ({ setshowSignup, setshowLogin }) => {
         className="dark-overlay fixed top-0 bottom-0 left-0 right-0 bg-black700"
         onClick={handleOverlayClick}
       ></div>
-      <div className="w-full max-w-sm fixed top-2/4 left-2/4 right-2/4 -translate-x-2/4 -translate-y-2/4 rounded">
+      <div className="w-full max-w-sm fixed top-2/4 left-2/4 right-2/4 -translate-x-2/4 -translate-y-2/4 rounded z-30">
         <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <p className="font-bold text-center text-3xl mb-4">Signup</p>
           <div className="mb-4">

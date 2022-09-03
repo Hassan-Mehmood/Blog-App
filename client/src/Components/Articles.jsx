@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchBlogs } from "../api/axiosClient";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 const Articles = () => {
   const { data, isLoading, isError, error } = useQuery(["blogs"], () =>
@@ -9,7 +10,7 @@ const Articles = () => {
   );
   return (
     <>
-      <article className="container mt-12 px-8 lg:grid lg:grid-cols-3 gap-8 lg:mt-28">
+      <article className="container mt-12 px-8 lg:grid lg:grid-cols-3 gap-8 lg:mt-10">
         <section className="mb-8 pb-4 border-b lg:border-none order-2">
           <p className="uppercase text-xs font-bold font-roboto my-2">
             Discover more of what matters to you
@@ -50,46 +51,52 @@ const Articles = () => {
           {data?.length === 0 ? "No Blogs in the database" : ""}
           {console.log(data)}
           {data?.map((blog, key) => (
-            <div
-              className="blog grid grid-cols-3 gap-1 items-center my-6 lg:mb-8"
-              key={key}
-            >
-              <div className="col-span-2">
-                <div className="author_info">
-                  <img
-                    src="https://miro.medium.com/fit/c/20/20/1*yPhYY-wHnLlVOuNqft-hUw.jpeg"
-                    alt=""
-                    className="rounded-full"
-                  />
-                  <p className="text-sm">Emmanual</p>
-                </div>
-                <h2 className="font-roboto font-bold text-base xs:text-2xl md:text-3xl  ">
-                  {blog.title}
-                </h2>
-                <p className="hidden md:block opacity-80 my-2">
-                  {blog.excerpt}
-                </p>
-                <div className="mt-4">
-                  <p className="inline-block">
-                    {moment(blog.createdAt).format("MMM D ")}
+            <Link to={"./blog/:userId"} key={key}>
+              <div className="blog grid grid-cols-3 gap-1 items-center my-6 lg:mb-8">
+                <div className="col-span-2">
+                  <div className="author_info flex mb-2">
+                    <img
+                      src="https://miro.medium.com/fit/c/20/20/1*yPhYY-wHnLlVOuNqft-hUw.jpeg"
+                      alt=""
+                      className="rounded-full"
+                    />
+                    <p className="text-sm capitalize ml-2 -z-10">
+                      {blog.author.username}
+                    </p>
+                  </div>
+                  <h2 className="font-roboto font-bold text-base xs:text-2xl md:text-3xl  ">
+                    {blog.title}
+                  </h2>
+                  <p className="hidden md:block opacity-80 my-2">
+                    {blog.excerpt}
                   </p>
-                  <span className="inline-block bg-light rounded-lg px-3 ml-4">
-                    Tech
-                  </span>
+                  <div className="mt-4">
+                    <p className="inline-block">
+                      {moment(blog.createdAt).format("MMM D ")}
+                    </p>
+                    {blog?.tags.map((tag, key) => (
+                      <span
+                        className="inline-block bg-light rounded-lg px-3 ml-4"
+                        key={key}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div className="blog_img ">
+                  <div className="h-[134px]">
+                    <img
+                      src={require(`../uploads/${blog.image}`)}
+                      alt=""
+                      className="mx-auto h-full object-cover"
+                      height={134}
+                      width={200}
+                    />
+                  </div>
                 </div>
               </div>
-              <div className="blog_img ">
-                <div className="h-[134px]">
-                  <img
-                    src={require(`../uploads/${blog.image}`)}
-                    alt=""
-                    className="mx-auto h-full object-cover"
-                    height={134}
-                    width={200}
-                  />
-                </div>
-              </div>
-            </div>
+            </Link>
           ))}
         </section>
       </article>

@@ -36,7 +36,7 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 border-b transition ease-in duration-100  ${
+        className={`fixed top-0 left-0 right-0 border-b transition ease-in duration-100  z-30 ${
           changeColor ? "bg-white" : "bg-customYellow"
         }`}
       >

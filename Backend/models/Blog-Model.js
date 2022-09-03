@@ -9,7 +9,8 @@ const blogSchema = new Schema(
       trim: true,
     },
     author: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
     excerpt: {

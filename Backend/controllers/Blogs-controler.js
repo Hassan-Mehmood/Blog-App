@@ -1,10 +1,17 @@
-const blogModel = require("../models/Blog-Model.js");
+const BlogModel = require("../models/Blog-Model.js");
+const UserModel = require("../models/user-Model.js");
 const errorHandler = require("../utils/error.js");
 
 const getAllBlogs = async (req, res, next) => {
   try {
-    const blogs = await blogModel.find();
-    res.status(200).json(blogs);
+    const blogs = await BlogModel.find()
+      .populate("author", "username")
+      .exec(function (err, blog) {
+        if (err) return next(err);
+        return res.status(200).json(blog);
+      });
+
+    // res.status(200).json(blogs);
   } catch (error) {
     next(error);
   }
@@ -13,7 +20,7 @@ const getAllBlogs = async (req, res, next) => {
 const getBlog = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const blog = await blogModel.findById(id);
+    const blog = await BlogModel.findById(id);
 
     res.status(200).json(blog);
   } catch (error) {
@@ -23,14 +30,21 @@ const getBlog = async (req, res, next) => {
 
 const createBolg = async (req, res, next) => {
   try {
-    const createdBlog = await blogModel.create({
+    const authorID = req.user.id; //This user.id comes after authenticating jwt token
+    const createdBlog = await BlogModel.create({
       title: req.body.title,
       excerpt: req.body.excerpt,
-      author: req.user.id,
+      author: authorID,
       body: req.body.body,
       image: req.file.originalname,
     });
-    res.send(createdBlog);
+
+    // Pushing post to user's posts
+    await UserModel.findByIdAndUpdate(authorID, {
+      $push: { posts: createdBlog._id },
+    });
+
+    res.status(201).json({ response: "Published successfully" });
   } catch (error) {
     next(error);
   }
@@ -40,12 +54,12 @@ const updateBlog = async (req, res, next) => {
   try {
     const clientID = req.user.id;
     const blogID = req.params.id;
-    const blog = await blogModel.findById(blogID);
+    const blog = await BlogModel.findById(blogID);
 
     console.log(clientID, blog.author);
 
     if (clientID === blog.author) {
-      const updatedBlog = await blogModel.findByIdAndUpdate(blogID, req.body, {
+      const updatedBlog = await BlogModel.findByIdAndUpdate(blogID, req.body, {
         new: true,
         runValidators: true,
       });
@@ -63,10 +77,10 @@ const deleteBlog = async (req, res, next) => {
     console.log(req.user);
     const deleteBlogID = req.params.id;
     const userTokenID = req.user.id;
-    const blog = await blogModel.findById(deleteBlogID);
+    const blog = await BlogModel.findById(deleteBlogID);
 
     if (userTokenID === blog.author) {
-      const deleteBlog = await blogModel.findByIdAndDelete(
+      const deleteBlog = await BlogModel.findByIdAndDelete(
         deleteBlogID,
         req.body
       );
