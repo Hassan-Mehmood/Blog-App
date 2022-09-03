@@ -51,7 +51,7 @@ const Articles = () => {
           {data?.length === 0 ? "No Blogs in the database" : ""}
           {console.log(data)}
           {data?.map((blog, key) => (
-            <Link to={"./blog/:userId"} key={key}>
+            <Link to={`/blog/${blog._id}`} key={key}>
               <div className="blog grid grid-cols-3 gap-1 items-center my-6 lg:mb-8">
                 <div className="col-span-2">
                   <div className="author_info flex mb-2">
