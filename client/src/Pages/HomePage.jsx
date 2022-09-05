@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../Components/Navbar";
+import MainNavbar from "../Components/MainNavbar";
 import HeroSection from "../Components/HeroSection";
 import Articles from "../Components/Articles";
 
@@ -7,7 +7,7 @@ const HomePage = () => {
   return (
     <>
       <header>
-        <Navbar />
+        <MainNavbar />
         <HeroSection />
       </header>
       <main>

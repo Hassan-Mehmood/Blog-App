@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import SignupFormm from "../Components/SignupForm";
+import SignupFormm from "./SignupForm";
 import { Link, useNavigate } from "react-router-dom";
 import LoginForm from "./LoginForm";
 import { AuthContext } from "../Context/AuthContext";
@@ -61,12 +61,15 @@ const Navbar = () => {
             {user ? (
               <>
                 <li className="mx-8 text-lg">
-                  <Link to={`/blogs/${user?.userDetails._id}`}>My Blogs</Link>
+                  <Link to={`/user/${user?.userDetails._id}`}>My Blogs</Link>
                 </li>
 
                 <li className="text-lg">
+                  <Link to={""}>{user?.userDetails.username}</Link>
+                </li>
+                <li className="text-lg ml-8">
                   <Link to={""} onClick={handleLogout}>
-                    {user?.userDetails.username}
+                    Logout
                   </Link>
                 </li>
               </>

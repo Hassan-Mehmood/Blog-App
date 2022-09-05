@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { GrHomeRounded } from "react-icons/gr";
-import { BsPencilSquare } from "react-icons/bs";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext";
 import { useContext } from "react";
 import SignupForm from "./SignupForm";
 import LoginForm from "./LoginForm";
 const Sidebar = () => {
   const { user, dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [showSignup, setshowSignup] = useState(false);
   const [showLogin, setshowLogin] = useState(false);
@@ -18,6 +18,14 @@ const Sidebar = () => {
   };
   const handleShowLogin = () => {
     setshowLogin(true);
+  };
+
+  const handleWriteClick = () => {
+    if (!user) {
+      setshowLogin(true);
+      return;
+    }
+    navigate("/write");
   };
 
   const handleLogout = () => {
@@ -33,9 +41,6 @@ const Sidebar = () => {
             <li className="mb-4">
               <Link to={"/"}>{<GrHomeRounded size={25} />}</Link>
             </li>
-            <li>
-              <Link to={"/"}>{<BsPencilSquare size={25} />}</Link>
-            </li>
           </ul>
         </div>
       </nav>
@@ -49,10 +54,8 @@ const Sidebar = () => {
             <h1 className="text-3xl font-semibold">Blogs</h1>
           </div>
           <ul className="flex justify-between">
-            <li>
-              <Link to={"/write"} className="text-lg">
-                Write
-              </Link>
+            <li onClick={handleWriteClick} className="text-lg cursor-pointer">
+              Write
             </li>
             {user ? (
               <>
@@ -61,8 +64,11 @@ const Sidebar = () => {
                 </li>
 
                 <li className="text-lg">
+                  <Link to={""}>{user?.userDetails.username}</Link>
+                </li>
+                <li className="text-lg ml-8">
                   <Link to={""} onClick={handleLogout}>
-                    {user?.userDetails.username}
+                    Logout
                   </Link>
                 </li>
               </>
