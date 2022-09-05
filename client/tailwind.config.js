@@ -12,6 +12,7 @@ module.exports = {
       black: "rgba(0,0,0)",
       black700: "rgba(0,0,0,0.7)",
       blue700: "rgb(29 78 216)",
+      blue: "0000FF",
     },
     fontFamily: {
       notoSerif: ["Noto Serif", "serif"],

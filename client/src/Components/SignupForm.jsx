@@ -26,9 +26,15 @@ const SignupForm = ({ setshowSignup, setshowLogin }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setshowSignup(false);
     mutation.mutate(formData);
+    setshowLogin(true);
     setFormData({ userName: "", email: "", password: "", confirmPassword: "" });
+  };
+
+  const showLogin = () => {
+    setshowSignup(false);
+    setshowLogin(true);
   };
 
   const handleOverlayClick = () => {
@@ -37,11 +43,11 @@ const SignupForm = ({ setshowSignup, setshowLogin }) => {
   return (
     <>
       <div
-        className="dark-overlay fixed top-0 bottom-0 left-0 right-0 bg-black700"
+        className="dark-overlay fixed top-0 bottom-0 left-0 right-0 z-30 bg-black700"
         onClick={handleOverlayClick}
       ></div>
       <div className="w-full max-w-sm fixed top-2/4 left-2/4 right-2/4 -translate-x-2/4 -translate-y-2/4 rounded z-30">
-        <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 z-50">
           <p className="font-bold text-center text-3xl mb-4">Signup</p>
           <div className="mb-4">
             {/* USERNAME */}
@@ -92,12 +98,16 @@ const SignupForm = ({ setshowSignup, setshowLogin }) => {
             />
           </div>
           <button
-            className="bg-blue-500 hover:bg-blue700 hover:text-white border font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline focus:bg-blue700 focus:text-white"
+            className="bg-blue-500 hover:bg-blue700 hover:text-white border font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline focus:bg-blue700 focus:text-white mb-3"
             type="submit"
             onClick={handleSubmit}
           >
             Sign Up
           </button>
+          <p onClick={showLogin}>
+            Already have an account?{" "}
+            <span className="text-blue700 hover:underline">Sign in</span>
+          </p>
         </form>
       </div>
     </>

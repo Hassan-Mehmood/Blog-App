@@ -1,14 +1,16 @@
 import React from "react";
 import { useState } from "react";
 import SignupFormm from "../Components/SignupForm";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoginForm from "./LoginForm";
 import { AuthContext } from "../Context/AuthContext";
 import { useContext } from "react";
+
 const Navbar = () => {
   const [changeColor, setChangeColor] = useState(false);
   const [showSignup, setshowSignup] = useState(false);
   const [showLogin, setshowLogin] = useState(false);
+  const navigate = useNavigate();
 
   const { user, dispatch } = useContext(AuthContext);
 
@@ -31,6 +33,14 @@ const Navbar = () => {
     dispatch({ type: "LOGOUT" });
   };
 
+  const handleWriteClick = () => {
+    if (!user) {
+      setshowLogin(true);
+      return;
+    }
+    navigate("/write");
+  };
+
   window.addEventListener("scroll", handleScrollNavbar);
 
   return (
@@ -45,10 +55,8 @@ const Navbar = () => {
             <h1 className="text-3xl font-semibold">Blogs</h1>
           </div>
           <ul className="flex justify-between">
-            <li>
-              <Link to={"/write"} className="text-lg">
-                Write
-              </Link>
+            <li onClick={handleWriteClick} className="text-lg cursor-pointer">
+              Write
             </li>
             {user ? (
               <>

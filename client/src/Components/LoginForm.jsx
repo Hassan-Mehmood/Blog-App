@@ -6,7 +6,7 @@ import { loginUser } from "../api/axiosClient";
 // This component & Signup component are the worst things i have written in my life!!
 // Will fix it when i get the time and energy
 
-const LoginForm = ({ setshowLogin }) => {
+const LoginForm = ({ setshowLogin, setshowSignup }) => {
   // Login form data state
   const [formData, setFormData] = useState({
     userName: "",
@@ -32,8 +32,13 @@ const LoginForm = ({ setshowLogin }) => {
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
       setshowLogin(false);
     } catch (error) {
-      dispatch({ type: "LOGIN_FAIL", payload: error.response.data });
+      dispatch({ type: "LOGIN_FAIL", payload: error });
     }
+  };
+
+  const showLogin = () => {
+    setshowSignup(true);
+    setshowLogin(false);
   };
 
   // Hide the login form when clicked
@@ -43,12 +48,12 @@ const LoginForm = ({ setshowLogin }) => {
   return (
     <>
       <div
-        className="dark-overlay fixed top-0 bottom-0 left-0 right-0 bg-black700"
+        className="dark-overlay fixed top-0 bottom-0 left-0 right-0 z-30 bg-black700"
         onClick={handleOverlayClick}
       ></div>
       <div className="w-full max-w-xs fixed top-2/4 left-2/4 right-2/4 -translate-x-2/4 -translate-y-2/4 rounded z-30">
         <form
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 z-50"
           onSubmit={handleSubmit}
         >
           <p className="font-bold text-center text-3xl mb-4">Login</p>
@@ -76,15 +81,18 @@ const LoginForm = ({ setshowLogin }) => {
               handleFormChange={handleFormChange}
             />
           </div>
-          <div className="flex items-center justify-between">
-            <button
-              className="bg-blue-500 hover:bg-customYellow hover:text-black border font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline focus:bg-customYellow focus:text-black"
-              type="submit"
-              onSubmit={handleSubmit}
-            >
-              Sign In
-            </button>
-          </div>
+
+          <button
+            className="bg-blue-500 hover:bg-customYellow hover:text-black border font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline focus:bg-customYellow focus:text-black"
+            type="submit"
+            onSubmit={handleSubmit}
+          >
+            Sign In
+          </button>
+          <p onClick={showLogin}>
+            Don't have an account?{" "}
+            <span className="text-blue700 hover:underline">Sign up</span>
+          </p>
           <div className="text-center">
             <p>{loading ? "Loading" : ""}</p>
             <p className="text-red mt-8">{error ? "ERROR" : ""}</p>

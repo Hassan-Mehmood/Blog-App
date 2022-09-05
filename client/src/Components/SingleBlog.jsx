@@ -7,16 +7,20 @@ import { fetchSingleBlog } from "../api/axiosClient";
 const SingleBlog = () => {
   const { id } = useParams();
 
-  const { data, isError, error } = useQuery(
+  const { data, isLoading, isError, error } = useQuery(
     ["Singleblog"],
     async () => await fetchSingleBlog(`/blogs/${id}`)
   );
 
   return (
     <section className="max-w-2xl mx-auto mt-20">
+      {isLoading && (
+        <div className="text-center text-xl opacity-60">Loading Blog...</div>
+      )}
+      {isError && <div className="text-center text-xl opacity-60">{error}</div>}
       {data ? (
-        <div className="blog-content">
-          <section className="author_info flex items-center mb-2">
+        <div className="blog-content px-3">
+          <section className="author_info flex items-center  mb-2">
             <img
               src="https://miro.medium.com/fit/c/20/20/1*yPhYY-wHnLlVOuNqft-hUw.jpeg"
               alt=""
@@ -49,12 +53,7 @@ const SingleBlog = () => {
           </section>
         </div>
       ) : (
-        <>
-          <div className="text-center text-lg opacity-60">Fetching Data...</div>
-          <div className="text-center text-lg opacity-60">
-            {isError ? error.message : ""}
-          </div>
-        </>
+        ""
       )}
     </section>
   );
