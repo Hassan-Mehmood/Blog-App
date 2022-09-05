@@ -16,7 +16,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/write" element={<WriteBlog />} />
-            <Route path="/blog/:blogID" element={<Blogs />} />
+            <Route path="/blog/:id" element={<Blogs />} />
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>

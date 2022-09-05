@@ -20,9 +20,16 @@ const getAllBlogs = async (req, res, next) => {
 const getBlog = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const blog = await BlogModel.findById(id);
 
-    res.status(200).json(blog);
+    BlogModel.findById(id)
+      .populate("author", "username")
+      .exec(function (err, blog) {
+        if (err) return next(err);
+        console.log("Singel BLog");
+        return res.status(200).json(blog);
+      });
+
+    // res.status(200).json(blog);
   } catch (error) {
     next(errorHandler(404, "Could not find blog"));
   }
