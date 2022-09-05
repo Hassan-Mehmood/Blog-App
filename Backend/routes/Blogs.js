@@ -5,6 +5,7 @@ const {
   createBolg,
   updateBlog,
   deleteBlog,
+  getUserBlogs,
 } = require("../controllers/Blogs-controler.js");
 const { verifyToken } = require("../utils/verifyToken");
 const router = express.Router();
@@ -26,6 +27,9 @@ router.get("/", getAllBlogs);
 
 // Get single Blog
 router.get("/:id", getBlog);
+
+// Get User Blogs
+router.get("/user_blogs/:id", getUserBlogs);
 
 // Create Blog
 router.post("/write", upload.single("image"), verifyToken, createBolg);

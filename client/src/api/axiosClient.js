@@ -9,7 +9,13 @@ export const fetchBlogs = async (endPoint) => {
   const { data } = await axiosClient.get(endPoint);
   return data;
 };
+
 export const fetchSingleBlog = async (endPoint) => {
+  const { data } = await axiosClient.get(endPoint);
+  return data;
+};
+
+export const fetchUserBlogs = async (endPoint) => {
   const { data } = await axiosClient.get(endPoint);
   return data;
 };

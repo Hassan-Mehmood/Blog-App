@@ -60,7 +60,9 @@ const Sidebar = () => {
             {user ? (
               <>
                 <li className="mx-8 text-lg">
-                  <Link to={`/blogs/${user?.userDetails._id}`}>My Blogs</Link>
+                  <Link to={`/user_blogs/${user?.userDetails._id}`}>
+                    My Blogs
+                  </Link>
                 </li>
 
                 <li className="text-lg">

@@ -61,7 +61,9 @@ const Navbar = () => {
             {user ? (
               <>
                 <li className="mx-8 text-lg">
-                  <Link to={`/user/${user?.userDetails._id}`}>My Blogs</Link>
+                  <Link to={`/user_blogs/${user?.userDetails._id}`}>
+                    My Blogs
+                  </Link>
                 </li>
 
                 <li className="text-lg">

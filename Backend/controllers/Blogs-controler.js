@@ -35,6 +35,26 @@ const getBlog = async (req, res, next) => {
   }
 };
 
+const getUserBlogs = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+
+    // const user = await UserModel.findById.apply(id);
+
+    UserModel.findById(id)
+      .populate("posts")
+      .exec(function (err, blog) {
+        if (err) return next(err);
+        const { password, ...userData } = blog._doc;
+        return res.status(200).json(userData);
+      });
+
+    // res.status(200).json(blog);
+  } catch (error) {
+    next(errorHandler(404, "Could not find blog"));
+  }
+};
+
 const createBolg = async (req, res, next) => {
   try {
     const authorID = req.user.id; //This user.id comes after authenticating jwt token
@@ -101,4 +121,11 @@ const deleteBlog = async (req, res, next) => {
   }
 };
 
-module.exports = { getAllBlogs, getBlog, createBolg, updateBlog, deleteBlog };
+module.exports = {
+  getAllBlogs,
+  getBlog,
+  createBolg,
+  updateBlog,
+  deleteBlog,
+  getUserBlogs,
+};
