@@ -1,15 +1,16 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchBlogs } from "../api/axiosClient";
-
-import { Link } from "react-router-dom";
 import Blog from "./Blog";
+import { useContext } from "react";
+import { AuthContext } from "../Context/AuthContext";
 
 const Articles = () => {
   const { data, isLoading, isError, error } = useQuery(["blogs"], () =>
     fetchBlogs("/blogs")
   );
   console.log(data);
+  const { user } = useContext(AuthContext);
   return (
     <>
       <article className="container mt-12 px-8 lg:grid lg:grid-cols-3 gap-8 lg:mt-10">
@@ -52,9 +53,9 @@ const Articles = () => {
           {isError ? error : ""}
           {data?.length === 0 ? "No Blogs in the database" : ""}
           {data?.map((blog, key) => (
-            <Link to={`/blog/${blog._id}`} key={key}>
-              <Blog blog={blog} />
-            </Link>
+            <article key={key}>
+              <Blog blog={blog} user={user} />
+            </article>
           ))}
         </section>
       </article>

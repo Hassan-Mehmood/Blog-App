@@ -21,10 +21,10 @@ const UserBlogs = () => {
         />
         <div className="mt-4">
           <p className="text-lg capitalize ml-2 ">
-            <span className="font-bold">Name:</span> {data.username}
+            <span className="font-bold">Name:</span> {data?.username}
           </p>
           <p className="text-lg capitalize ml-2 ">
-            <span className="font-bold">Email:</span> {data.email}
+            <span className="font-bold">Email:</span> {data?.email}
           </p>
         </div>
       </div>

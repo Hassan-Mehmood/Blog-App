@@ -6,6 +6,7 @@ const getAllBlogs = async (req, res, next) => {
   try {
     const blogs = await BlogModel.find()
       .populate("author", "username")
+      .sort({ createdAt: -1 })
       .exec(function (err, blog) {
         if (err) return next(err);
         return res.status(200).json(blog);
@@ -25,7 +26,7 @@ const getBlog = async (req, res, next) => {
       .populate("author", "username")
       .exec(function (err, blog) {
         if (err) return next(err);
-        console.log("Singel BLog");
+
         return res.status(200).json(blog);
       });
 
@@ -58,12 +59,16 @@ const getUserBlogs = async (req, res, next) => {
 const createBolg = async (req, res, next) => {
   try {
     const authorID = req.user.id; //This user.id comes after authenticating jwt token
+
+    const tags = req.body.tags.split(",");
+
     const createdBlog = await BlogModel.create({
       title: req.body.title,
       excerpt: req.body.excerpt,
       author: authorID,
       body: req.body.body,
       image: req.file.originalname,
+      tags: tags,
     });
 
     // Pushing post to user's posts
@@ -101,12 +106,11 @@ const updateBlog = async (req, res, next) => {
 
 const deleteBlog = async (req, res, next) => {
   try {
-    console.log(req.user);
     const deleteBlogID = req.params.id;
     const userTokenID = req.user.id;
     const blog = await BlogModel.findById(deleteBlogID);
 
-    if (userTokenID === blog.author) {
+    if (userTokenID == blog.author) {
       const deleteBlog = await BlogModel.findByIdAndDelete(
         deleteBlogID,
         req.body

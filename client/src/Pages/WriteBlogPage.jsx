@@ -12,6 +12,7 @@ const WriteBlog = () => {
     body: "",
     excerpt: "",
     image: "",
+    tags: "",
   });
 
   const { user } = useContext(AuthContext);
@@ -70,7 +71,7 @@ const WriteBlog = () => {
               handleFormChange={handleFormChange}
             />
           </div>
-          <div className="mb-6">
+          <div>
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="body"
@@ -85,6 +86,16 @@ const WriteBlog = () => {
               placeholder="Blog body..."
               onChange={handleFormChange}
             ></textarea>
+          </div>
+          <div className="mb-6 mt-3">
+            <Field
+              label={"Tags"}
+              id={"tags"}
+              name={"tags"}
+              type={"text"}
+              placeholder={"Write tags separated by comma ( , )"}
+              handleFormChange={handleFormChange}
+            />
           </div>
           <div className="flex items-center justify-between ">
             <div>
