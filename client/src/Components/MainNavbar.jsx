@@ -52,7 +52,9 @@ const Navbar = () => {
       >
         <div className=" container flex justify-between items-center px-8 h-20  ">
           <div className="logo">
-            <h1 className="text-3xl font-semibold">Blogs</h1>
+            <Link to={"/"}>
+              <h1 className="text-3xl font-semibold">Blogs</h1>
+            </Link>
           </div>
           <ul className="flex justify-between">
             <li onClick={handleWriteClick} className="text-lg cursor-pointer">

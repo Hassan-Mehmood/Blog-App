@@ -1,19 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import moment from "moment";
-import { useMutation } from "@tanstack/react-query";
-import { deleteBlog } from "../api/axiosClient";
+// import { useMutation } from "@tanstack/react-query";
+// import { deleteBlog } from "../api/axiosClient";
 import { Link } from "react-router-dom";
 
 const Blog = ({ blog, user }) => {
-  const [handleDelete, setHandleDelete] = useState(false);
-  const mutation = useMutation((blog) => {
-    deleteBlog(`/blogs/delete/${blog}`);
-  });
-
-  const handleDeleteClick = (blogId) => {
-    mutation.mutate(blogId);
-  };
-
   return (
     <>
       <Link to={`/blog/${blog._id}`}>
@@ -60,19 +51,6 @@ const Blog = ({ blog, user }) => {
           </div>
         </div>
       </Link>
-      {user?.userDetails._id === blog.author._id ? (
-        <div className="lg:mb-4">
-          <button className="bg-blue700 py px-4 text-white mr-1">Edit</button>
-          <button
-            className="bg-red py px-4 text-white"
-            onClick={() => handleDeleteClick(blog._id)}
-          >
-            Delete
-          </button>
-        </div>
-      ) : (
-        ""
-      )}
     </>
   );
 };

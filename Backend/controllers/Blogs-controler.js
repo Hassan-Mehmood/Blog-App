@@ -111,12 +111,9 @@ const deleteBlog = async (req, res, next) => {
     const blog = await BlogModel.findById(deleteBlogID);
 
     if (userTokenID == blog.author) {
-      const deleteBlog = await BlogModel.findByIdAndDelete(
-        deleteBlogID,
-        req.body
-      );
-
-      res.json(deleteBlog);
+      await BlogModel.findByIdAndDelete(deleteBlogID, req.body);
+      console.log({ response: "Blog deleted" });
+      res.status(200).json({ response: "Blog deleted" });
     } else {
       next(errorHandler(401, "You are not authorized to delete this blog"));
     }
