@@ -38,7 +38,7 @@ const Navbar = () => {
       setshowLogin(true);
       return;
     }
-    navigate("/write");
+    navigate("/blog/write");
   };
 
   window.addEventListener("scroll", handleScrollNavbar);

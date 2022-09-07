@@ -5,6 +5,7 @@ import Blog from "./Blog";
 import { useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Articles = () => {
   const { user } = useContext(AuthContext);
@@ -35,8 +36,15 @@ const Articles = () => {
     await mutateAsync(blogId);
   };
 
+  const navigate = useNavigate();
+  const handleEditClick = (blog) => {
+    navigate(`/blog/edit/${blog}`);
+    // queryClient.resetQueries(["editBlog"]);
+  };
+
   return (
     <>
+      {/* Deleting Notification */}
       {deleteLoading && (
         <div className="fixed bottom-10 left-2/4 rounded text-center -translate-x-1/2 z-50 w-40 bg-red border px-5 py-3">
           <div className="text-white">Deleting</div>
@@ -86,7 +94,10 @@ const Articles = () => {
               <Blog blog={blog} user={user} />
               {user?.userDetails._id === blog.author._id ? (
                 <div className="lg:mb-4">
-                  <button className="bg-blue700 py px-4 text-white mr-1">
+                  <button
+                    className="bg-blue700 py px-4 text-white mr-1"
+                    onClick={() => handleEditClick(blog._id)}
+                  >
                     Edit
                   </button>
                   <button

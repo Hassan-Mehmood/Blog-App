@@ -88,8 +88,6 @@ const updateBlog = async (req, res, next) => {
     const blogID = req.params.id;
     const blog = await BlogModel.findById(blogID);
 
-    console.log(clientID, blog.author);
-
     if (clientID === blog.author) {
       const updatedBlog = await BlogModel.findByIdAndUpdate(blogID, req.body, {
         new: true,
@@ -112,7 +110,7 @@ const deleteBlog = async (req, res, next) => {
 
     if (userTokenID == blog.author) {
       await BlogModel.findByIdAndDelete(deleteBlogID, req.body);
-      console.log({ response: "Blog deleted" });
+
       res.status(200).json({ response: "Blog deleted" });
     } else {
       next(errorHandler(401, "You are not authorized to delete this blog"));
