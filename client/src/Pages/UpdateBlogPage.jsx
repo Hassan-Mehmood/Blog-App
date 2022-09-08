@@ -5,7 +5,6 @@ import { Link, useParams } from "react-router-dom";
 import { fetchSingleBlog, updateBlog } from "../api/axiosClient";
 import Field from "../Components/FormFields/Field";
 import { AuthContext } from "../Context/AuthContext";
-import { BsFillImageFill } from "react-icons/bs";
 
 const UpdateBlogPage = () => {
   const [loading, setLoading] = useState(undefined);
