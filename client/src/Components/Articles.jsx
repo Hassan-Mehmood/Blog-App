@@ -39,7 +39,6 @@ const Articles = () => {
   const navigate = useNavigate();
   const handleEditClick = (blog) => {
     navigate(`/blog/edit/${blog}`);
-    // queryClient.resetQueries(["editBlog"]);
   };
 
   return (

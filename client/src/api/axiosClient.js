@@ -33,6 +33,11 @@ export const uploadBlog = async (endPoint, payLoad) => {
     headers: { "Content-Type": "multipart/form-data" },
   });
 };
+export const updateBlog = async (endPoint, payLoad) => {
+  return axiosClient.put(endPoint, payLoad, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+};
 
 export const deleteBlog = async (endPoint) => {
   return axiosClient.delete(endPoint);

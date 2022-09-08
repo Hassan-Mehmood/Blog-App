@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useContext } from "react";
+import { BsFillImageFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { uploadBlog } from "../api/axiosClient";
 import Field from "../Components/FormFields/Field";
@@ -104,21 +105,19 @@ const WriteBlog = () => {
                 name="image"
                 accept=".png, .jpg, .jpeg"
                 onChange={handlePhoto}
+                id="image"
+                required
               />
-              <button
-                className="font-bold py-2 px-4 ml-2 rounded border"
-                type="submit"
-                onSubmit={handleSubmit}
-              >
-                Publish
-              </button>
             </div>
-            <button>
-              <Link
-                to={"/"}
-                className="font-bold ml-8 py-2 px-4 rounded border"
-                type="button"
-              >
+            <button
+              className="font-bold py-2 px-4 ml-2 rounded border"
+              type="submit"
+              onSubmit={handleSubmit}
+            >
+              Publish
+            </button>
+            <button className="font-bold ml-8 py-2 px-4 rounded border">
+              <Link to={"/"} type="button">
                 Back
               </Link>
             </button>

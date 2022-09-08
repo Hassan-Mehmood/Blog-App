@@ -2,9 +2,10 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
-import { fetchSingleBlog } from "../api/axiosClient";
+import { fetchSingleBlog, updateBlog } from "../api/axiosClient";
 import Field from "../Components/FormFields/Field";
 import { AuthContext } from "../Context/AuthContext";
+import { BsFillImageFill } from "react-icons/bs";
 
 const UpdateBlogPage = () => {
   const [loading, setLoading] = useState(undefined);
@@ -41,14 +42,19 @@ const UpdateBlogPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // const mutation = useMutation((blog) => {
-  //   // uploadBlog("/blogs/write", blog);
-  // });
+  const mutation = useMutation((blog) => {
+    updateBlog(`blogs/update/${data._id}`, blog);
+    console.log("Done");
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      // mutation.mutate({ ...formData, author: userDetails._id });
+      const { data } = mutation.mutate({
+        ...formData,
+        author: userDetails._id,
+      });
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -57,7 +63,7 @@ const UpdateBlogPage = () => {
     setFormData({ ...formData, image: e.target.files[0] });
   };
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <section className="flex flex-col justify-center items-center max-h-screen">
@@ -129,15 +135,16 @@ const UpdateBlogPage = () => {
                 name="image"
                 accept=".png, .jpg, .jpeg"
                 onChange={handlePhoto}
+                required
               />
-              <button
-                className="font-bold py-2 px-4 ml-2 rounded border"
-                type="submit"
-                onSubmit={handleSubmit}
-              >
-                Publish
-              </button>
             </div>
+            <button
+              className="font-bold py-2 px-4 ml-2 rounded border"
+              type="submit"
+              onSubmit={handleSubmit}
+            >
+              Publish
+            </button>
             <button>
               <Link
                 to={"/"}
