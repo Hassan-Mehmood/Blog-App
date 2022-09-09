@@ -28,6 +28,7 @@ const SignupForm = ({ setshowSignup, setshowLogin }) => {
       await signUpUser("/auth/register", addUser);
     } catch (error) {
       const response = error.response.data;
+      console.log(response);
       setSignupErrors(response);
     }
   });
@@ -38,7 +39,6 @@ const SignupForm = ({ setshowSignup, setshowLogin }) => {
     const msg = error.msg;
     formErrors = { ...formErrors, [field]: msg };
   });
-  console.log(formErrors);
 
   const handleFormChange = (e) => {
     const inputName = e.target.name;
@@ -48,10 +48,9 @@ const SignupForm = ({ setshowSignup, setshowLogin }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // setshowSignup(false);
+    setshowSignup(false);
     mutation.mutate(formData);
-    // setshowLogin(true);
-    setFormData({ userName: "", email: "", password: "", confirmPassword: "" });
+    setshowLogin(true);
   };
 
   const showLogin = () => {

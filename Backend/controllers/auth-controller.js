@@ -6,10 +6,17 @@ const { validationResult } = require("express-validator");
 
 const register = async (req, res, next) => {
   try {
+    const { password, confirmPassword } = req.body;
     const validationerrors = validationResult(req);
 
     if (!validationerrors.isEmpty()) {
       const errors = validationerrors.array();
+      if (password !== confirmPassword) {
+        errors.push({
+          msg: "Passwords are not maching",
+          param: "confirmPassword",
+        });
+      }
       return res.status(400).json(errors);
     }
 
