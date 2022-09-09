@@ -6,19 +6,28 @@ const { validationResult } = require("express-validator");
 
 const register = async (req, res, next) => {
   try {
-    const { password, confirmPassword } = req.body;
+    let errors = [];
+    const { userName, password, confirmPassword } = req.body;
     const validationerrors = validationResult(req);
 
     if (!validationerrors.isEmpty()) {
-      const errors = validationerrors.array();
-      if (password !== confirmPassword) {
-        errors.push({
-          msg: "Passwords are not maching",
-          param: "confirmPassword",
-        });
-      }
+      errors = validationerrors.array();
       return res.status(400).json(errors);
     }
+
+    if (password !== confirmPassword) {
+      errors.push({
+        msg: "Passwords are not maching",
+        param: "confirmPassword",
+      });
+    }
+
+    userModel.countDocuments({ username: userName }, (err, count) => {
+      if (count > 0) {
+        errors.push({ msg: "Username already used", param: "userName" });
+        return res.status(400).json(errors);
+      }
+    });
 
     const pass = req.body.password.toString();
 
@@ -32,7 +41,8 @@ const register = async (req, res, next) => {
     });
 
     await registerUser.save();
-    res.status(201).send(registerUser);
+
+    res.status(201).json({ success: "Registered Successfully" });
   } catch (error) {
     next(errorHandler(error.status, error.message));
   }
@@ -40,13 +50,23 @@ const register = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   try {
+    let errors = [];
+    const validationerrors = validationResult(req);
+
+    if (!validationerrors.isEmpty()) {
+      errors = validationerrors.array();
+      return res.status(400).json(errors);
+    }
+
     const user = await userModel.findOne({ username: req.body.userName });
     if (!user) {
-      return next(errorHandler(404, "User not found!"));
+      errors.push({ msg: "Incorrect Username", param: "userName" });
+      return res.status(400).json(errors);
     }
     const pass = bcrypt.compareSync(req.body.password, user.password);
     if (!pass) {
-      return next(errorHandler(400, "Wrong password or username!"));
+      errors.push({ msg: "Wrong password or username!", param: "password" });
+      return res.status(400).json(errors);
     }
 
     const { password, ...otherDetails } = user._doc;

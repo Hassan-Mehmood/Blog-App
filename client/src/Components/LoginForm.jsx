@@ -13,7 +13,13 @@ const LoginForm = ({ setshowLogin, setshowSignup }) => {
     password: "",
   });
 
-  const { loading, error, dispatch } = useContext(AuthContext);
+  // For error handling
+  const [formDataErrors, setFormDataErrors] = useState({
+    userName: "",
+    password: "",
+  });
+
+  const { loading, dispatch } = useContext(AuthContext);
 
   // detect change in login form
   const handleFormChange = (e) => {
@@ -24,15 +30,25 @@ const LoginForm = ({ setshowLogin, setshowSignup }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setFormDataErrors({
+      userName: "",
+      password: "",
+    });
     dispatch({ type: "LOGIN_START" });
 
     try {
       const res = await loginUser("/auth/login", formData);
-
+      console.log(res.data);
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
       setshowLogin(false);
     } catch (error) {
-      dispatch({ type: "LOGIN_FAIL", payload: error });
+      const errorData = error.response.data;
+
+      errorData.forEach((err) => {
+        setFormDataErrors({ ...formDataErrors, [err.param]: err.msg });
+      });
+
+      dispatch({ type: "LOGIN_FAIL", payload: error.response.data });
     }
   };
 
@@ -67,6 +83,7 @@ const LoginForm = ({ setshowLogin, setshowSignup }) => {
               type={"text"}
               value={formData.userName}
               handleFormChange={handleFormChange}
+              errorMessage={formDataErrors.userName}
             />
           </div>
           <div className="mb-6">
@@ -79,24 +96,24 @@ const LoginForm = ({ setshowLogin, setshowSignup }) => {
               type={"password"}
               value={formData.password}
               handleFormChange={handleFormChange}
+              errorMessage={formDataErrors.password}
             />
           </div>
 
           <button
             className="bg-blue-500 hover:bg-customYellow hover:text-black border font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline focus:bg-customYellow focus:text-black"
             type="submit"
-            onSubmit={handleSubmit}
           >
             Sign In
           </button>
+          <div className="text-center my-4">
+            <p>{loading ? "Loading..." : ""}</p>
+          </div>
+
           <p onClick={showLogin}>
             Don't have an account?{" "}
             <span className="text-blue700 hover:underline">Sign up</span>
           </p>
-          <div className="text-center">
-            <p>{loading ? "Loading" : ""}</p>
-            <p className="text-red mt-8">{error ? "ERROR" : ""}</p>
-          </div>
         </form>
       </div>
     </>
