@@ -2,10 +2,17 @@ const userModel = require("../models/user-Model");
 const bcrypt = require("bcrypt");
 const errorHandler = require("../utils/error");
 const jwt = require("jsonwebtoken");
+const { validationResult } = require("express-validator");
 
 const register = async (req, res, next) => {
   try {
-    // This is b/c hashSync() expects first parameter to be a string
+    const validationerrors = validationResult(req);
+
+    if (!validationerrors.isEmpty()) {
+      const errors = validationerrors.array();
+      return res.status(400).json(errors);
+    }
+
     const pass = req.body.password.toString();
 
     const salt = bcrypt.genSaltSync(10);

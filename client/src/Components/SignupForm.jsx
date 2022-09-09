@@ -7,16 +7,38 @@ import { signUpUser } from "../api/axiosClient";
 // Will fix it when i get the time and energy
 
 const SignupForm = ({ setshowSignup, setshowLogin }) => {
+  const [signupErrors, setSignupErrors] = useState([]);
+  const [update, setupdate] = useState(false);
+
   const [formData, setFormData] = useState({
     userName: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
+  let formErrors = {
+    userName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  };
 
-  const mutation = useMutation((addUser) => {
-    signUpUser("/auth/register", addUser);
+  const mutation = useMutation(async (addUser) => {
+    try {
+      await signUpUser("/auth/register", addUser);
+    } catch (error) {
+      const response = error.response.data;
+      setSignupErrors(response);
+    }
   });
+
+  signupErrors.forEach((error) => {
+    // console.log(error);
+    const field = error.param;
+    const msg = error.msg;
+    formErrors = { ...formErrors, [field]: msg };
+  });
+  console.log(formErrors);
 
   const handleFormChange = (e) => {
     const inputName = e.target.name;
@@ -26,9 +48,9 @@ const SignupForm = ({ setshowSignup, setshowLogin }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setshowSignup(false);
+    // setshowSignup(false);
     mutation.mutate(formData);
-    setshowLogin(true);
+    // setshowLogin(true);
     setFormData({ userName: "", email: "", password: "", confirmPassword: "" });
   };
 
@@ -59,6 +81,7 @@ const SignupForm = ({ setshowSignup, setshowLogin }) => {
               type={"text"}
               value={formData.userName}
               handleFormChange={handleFormChange}
+              errorMessage={formErrors.userName}
             />
           </div>
           <div className="mb-4">
@@ -71,6 +94,7 @@ const SignupForm = ({ setshowSignup, setshowLogin }) => {
               type={"email"}
               value={formData.email}
               handleFormChange={handleFormChange}
+              errorMessage={formErrors.email}
             />
           </div>
           <div className="mb-4">
@@ -83,6 +107,7 @@ const SignupForm = ({ setshowSignup, setshowLogin }) => {
               type={"password"}
               value={formData.password}
               handleFormChange={handleFormChange}
+              errorMessage={formErrors.password}
             />
           </div>
           <div className="mb-6">
@@ -95,6 +120,7 @@ const SignupForm = ({ setshowSignup, setshowLogin }) => {
               type={"password"}
               value={formData.confirmPassword}
               handleFormChange={handleFormChange}
+              errorMessage={formErrors.confirmPassword}
             />
           </div>
           <button

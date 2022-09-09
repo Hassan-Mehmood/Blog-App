@@ -21,14 +21,10 @@ const Field = (props) => {
         type={props.type}
         placeholder={props.placeholder}
         required={true}
-        // pattern="^[a-zA-z]{3,16}$"
         onChange={handleFormChange}
         value={props.value}
       />
-      {/* <span className="text-xs text-red error-span">
-              Username should be 3-16 characters and shuld not include special
-              characters
-            </span> */}
+      <span className="text-xs text-red error-span">{props.errorMessage}</span>
     </>
   );
 };

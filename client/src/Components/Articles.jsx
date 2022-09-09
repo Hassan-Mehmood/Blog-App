@@ -5,7 +5,6 @@ import Blog from "./Blog";
 import { useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const Articles = () => {
   const { user } = useContext(AuthContext);
@@ -34,11 +33,6 @@ const Articles = () => {
     e.preventDefault();
     setDeleteLoading(true);
     await mutateAsync(blogId);
-  };
-
-  const navigate = useNavigate();
-  const handleEditClick = (blog) => {
-    navigate(`/blog/edit/${blog}`);
   };
 
   return (
@@ -93,12 +87,6 @@ const Articles = () => {
               <Blog blog={blog} user={user} />
               {user?.userDetails._id === blog.author._id ? (
                 <div className="lg:mb-4">
-                  <button
-                    className="bg-blue700 py px-4 text-white mr-1"
-                    onClick={() => handleEditClick(blog._id)}
-                  >
-                    Edit
-                  </button>
                   <button
                     className="bg-red py px-4 text-white"
                     onClick={(e) => handleDeleteClick(e, blog._id)}
