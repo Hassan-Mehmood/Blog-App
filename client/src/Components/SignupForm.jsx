@@ -7,15 +7,38 @@ import { signUpUser } from "../api/axiosClient";
 // Will fix it when i get the time and energy
 
 const SignupForm = ({ setshowSignup, setshowLogin }) => {
+  const [signupErrors, setSignupErrors] = useState([]);
+  const [signupSuccess, setsignupSuccess] = useState("");
+
   const [formData, setFormData] = useState({
     userName: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
+  let formErrors = {
+    userName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  };
 
-  const mutation = useMutation((addUser) => {
-    signUpUser("/auth/register", addUser);
+  const mutation = useMutation(async (addUser) => {
+    try {
+      const { data } = await signUpUser("/auth/register", addUser);
+      setsignupSuccess(data.success);
+    } catch (error) {
+      const response = error.response.data;
+      console.log(response);
+      setSignupErrors(response);
+    }
+  });
+
+  signupErrors.forEach((error) => {
+    // console.log(error);
+    const field = error.param;
+    const msg = error.msg;
+    formErrors = { ...formErrors, [field]: msg };
   });
 
   const handleFormChange = (e) => {
@@ -26,10 +49,9 @@ const SignupForm = ({ setshowSignup, setshowLogin }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setshowSignup(false);
+    setsignupSuccess("");
+    setSignupErrors([]);
     mutation.mutate(formData);
-    setshowLogin(true);
-    setFormData({ userName: "", email: "", password: "", confirmPassword: "" });
   };
 
   const showLogin = () => {
@@ -59,6 +81,7 @@ const SignupForm = ({ setshowSignup, setshowLogin }) => {
               type={"text"}
               value={formData.userName}
               handleFormChange={handleFormChange}
+              errorMessage={formErrors.userName}
             />
           </div>
           <div className="mb-4">
@@ -71,6 +94,7 @@ const SignupForm = ({ setshowSignup, setshowLogin }) => {
               type={"email"}
               value={formData.email}
               handleFormChange={handleFormChange}
+              errorMessage={formErrors.email}
             />
           </div>
           <div className="mb-4">
@@ -83,9 +107,10 @@ const SignupForm = ({ setshowSignup, setshowLogin }) => {
               type={"password"}
               value={formData.password}
               handleFormChange={handleFormChange}
+              errorMessage={formErrors.password}
             />
           </div>
-          <div className="mb-6">
+          <div className="mb-2">
             {/* CONFIRM PASSWORD */}
             <Field
               id={"confirmpassword"}
@@ -95,7 +120,13 @@ const SignupForm = ({ setshowSignup, setshowLogin }) => {
               type={"password"}
               value={formData.confirmPassword}
               handleFormChange={handleFormChange}
+              errorMessage={formErrors.confirmPassword}
             />
+          </div>
+          <div className="mb-6">
+            <span className="text-xs text-green error-span">
+              {signupSuccess}
+            </span>
           </div>
           <button
             className="bg-blue-500 hover:bg-blue700 hover:text-white border font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline focus:bg-blue700 focus:text-white mb-3"
